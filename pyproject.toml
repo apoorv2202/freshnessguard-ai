@@ -1,0 +1,16 @@
+[project]
+name = "freshnessguard-ai"
+version = "0.1.0"
+description = "Evidence-backed freshness reports for Bifrost gateway responses"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+freshnessguard = "freshnessguard.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["freshnessguard*"]

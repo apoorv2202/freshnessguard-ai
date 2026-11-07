@@ -1,0 +1,15 @@
+{
+  "as_of": "2026-11-05",
+  "purpose": "Developer-selected bounded smoke set, not a held-out accuracy study. Labels fixed before this run using primary release pages. Ambiguous/private claims require abstention.",
+  "references": ["https://www.python.org/downloads/", "https://devguide.python.org/versions/", "https://www.python.org/downloads/release/python-3110/"],
+  "cases": [
+    {"id":"stale-python", "category":"outdated", "answer":"The latest stable Python release series is 3.11.", "expected_claims":[{"text":"The latest stable Python release series is 3.11.", "verdict":"outdated"}]},
+    {"id":"current-python", "category":"current", "answer":"The latest stable Python release series is 3.15.", "expected_claims":[{"text":"The latest stable Python release series is 3.15.", "verdict":"supported"}]},
+    {"id":"timeless", "category":"timeless", "answer":"Water is made of hydrogen and oxygen.", "expected_claims":[{"text":"Water is made of hydrogen and oxygen.", "verdict":"not_checked"}]},
+    {"id":"private-policy", "category":"insufficient_evidence", "answer":"My private internal service currently requires Python 3.11.", "expected_claims":[{"text":"My private internal service currently requires Python 3.11.", "verdict":"uncertain"}]},
+    {"id":"unspecified-scope", "category":"ambiguous", "answer":"The latest Python version is 3.16.", "expected_claims":[{"text":"The latest Python version is 3.16.", "verdict":"uncertain"}]},
+    {"id":"misleading-input-link", "category":"misleading_citation", "answer":"The latest stable Python release series is 3.15 (source: https://example.com/python-release).", "expected_claims":[{"text":"The latest stable Python release series is 3.15", "verdict":"supported"}], "expect_input_citation_warning":true},
+    {"id":"mixed", "category":"multiple_claims", "answer":"The latest stable Python release series is 3.11. Water is made of hydrogen and oxygen.", "expected_claims":[{"text":"The latest stable Python release series is 3.11.", "verdict":"outdated"}, {"text":"Water is made of hydrogen and oxygen.", "verdict":"not_checked"}]},
+    {"id":"historical", "category":"historical_control", "answer":"Python 3.11.0 was released on October 24, 2022.", "expected_claims":[{"text":"Python 3.11.0 was released on October 24, 2022.", "verdict":"not_checked"}]}
+  ]
+}

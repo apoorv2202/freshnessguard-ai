@@ -1,0 +1,43 @@
+{
+  "run_at": "2026-11-05T16:42:11.407250+00:00",
+  "mode": "native_live",
+  "model": "gemini/gemini-3-flash-preview",
+  "topology": "WSL native Bifrost -> local stdio bridge -> existing authenticated Windows Bifrost -> Gemini; native post-hook -> Windows verifier -> Tavily/Gemini",
+  "live_pipeline_complete": false,
+  "original_preserved": true,
+  "bridge_calls": {
+    "provider": 1,
+    "annotate": 1
+  },
+  "end_to_end_ms": 13937.53,
+  "transport_roundtrip_demonstrated": true,
+  "review": "FAILED semantic review: generation truncated to a fragment, incorrectly judged using unrelated .NET evidence. Fixed by rejecting truncated provider answers and requiring concrete grounded subjects. Corrected native live run remains blocked on Gemini quota.",
+  "original_answer": "The latest stable",
+  "observed_claims": [
+    {
+      "text": "The latest stable",
+      "verdict": "supported",
+      "reason": ".NET 10 LTS is explicitly identified as the stable, long-term foundation for production systems as of the checked date.",
+      "validation_error": null,
+      "citations": [
+        {
+          "id": "s1",
+          "url": "https://metadesignsolutions.com/blog/net-8-lts-support-ends-november-2026-your-upgrade-options",
+          "primary": false
+        }
+      ]
+    }
+  ],
+  "metrics": {
+    "search_calls": 1,
+    "llm_calls": 2,
+    "tavily_credits": 1,
+    "credit_usage_complete": true,
+    "latency_ms": 8768.65,
+    "model_tokens": {
+      "prompt_tokens": 2314,
+      "completion_tokens": 197,
+      "total_tokens": 2511
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "as_of": "2026-11-05",
+  "purpose": "Small manually labelled smoke set. Not a representative quality benchmark. Re-label when upstream changes.",
+  "reference": "https://github.com/maximhq/bifrost/blob/afdce01b50a78199f59e38117cd4d5952d038b07/core/go.mod",
+  "cases": [
+    {"answer": "Bifrost's current core module declares Go 1.20.", "expected": "outdated"},
+    {"answer": "Bifrost's current core module declares Go 1.27.3.", "expected": "supported"},
+    {"answer": "Water is made of hydrogen and oxygen.", "expected": "not_checked"},
+    {"answer": "The current CEO of FictionalFreshnessCorp987654 is Ada Chen.", "expected": "uncertain"}
+  ]
+}

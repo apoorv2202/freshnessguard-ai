@@ -1,0 +1,465 @@
+{
+  "warning": "Runs use different revisions and overlapping cases. Do not aggregate them into an accuracy score. Last two runs stopped at HTTP 429; the latest grounded-subject guard was added afterwards and is offline-tested only.",
+  "runs": [
+    {
+      "name": "baseline-live",
+      "summary": {
+        "mode": "live",
+        "dataset": "benchmarks\\live-cases.json",
+        "reference_as_of": "2026-11-05",
+        "case_count": 4,
+        "case_agreement": 0.5,
+        "stale_precision": null,
+        "stale_recall": 0.0,
+        "false_fresh_count": 0,
+        "baseline_always_fresh_agreement": 0.25,
+        "median_latency_ms": 14278.759999999998,
+        "tavily_credits": 3,
+        "usage_complete": false
+      },
+      "rows": [
+        {
+          "id": null,
+          "answer": "Bifrost's current core module declares Go 1.20.",
+          "evaluation": null,
+          "legacy_expected": "outdated",
+          "legacy_actual": "uncertain",
+          "warnings": [],
+          "metrics": {
+            "search_calls": 1,
+            "llm_calls": 2,
+            "tavily_credits": 1,
+            "credit_usage_complete": true,
+            "latency_ms": 15507.97
+          },
+          "claims": [
+            {
+              "text": "Bifrost's current core module declares Go 1.20.",
+              "verdict": "uncertain",
+              "reason": "Insufficient current evidence",
+              "validation_error": null,
+              "citations": []
+            }
+          ]
+        },
+        {
+          "id": null,
+          "answer": "Bifrost's current core module declares Go 1.27.3.",
+          "evaluation": null,
+          "legacy_expected": "supported",
+          "legacy_actual": "uncertain",
+          "warnings": [],
+          "metrics": {
+            "search_calls": 1,
+            "llm_calls": 2,
+            "tavily_credits": 1,
+            "credit_usage_complete": false,
+            "latency_ms": 19289.18
+          },
+          "claims": [
+            {
+              "text": "Bifrost's current core module declares Go 1.27.3.",
+              "verdict": "uncertain",
+              "reason": "Verification unavailable or malformed evidence",
+              "validation_error": null,
+              "citations": []
+            }
+          ]
+        },
+        {
+          "id": null,
+          "answer": "Water is made of hydrogen and oxygen.",
+          "evaluation": null,
+          "legacy_expected": "not_checked",
+          "legacy_actual": "not_checked",
+          "warnings": [],
+          "metrics": {
+            "search_calls": 0,
+            "llm_calls": 1,
+            "tavily_credits": 0,
+            "credit_usage_complete": true,
+            "latency_ms": 10688.48
+          },
+          "claims": [
+            {
+              "text": "Water is made of hydrogen and oxygen.",
+              "verdict": "not_checked",
+              "reason": "Not time-sensitive",
+              "validation_error": null,
+              "citations": []
+            }
+          ]
+        },
+        {
+          "id": null,
+          "answer": "The current CEO of FictionalFreshnessCorp987654 is Ada Chen.",
+          "evaluation": null,
+          "legacy_expected": "uncertain",
+          "legacy_actual": "uncertain",
+          "warnings": [],
+          "metrics": {
+            "search_calls": 1,
+            "llm_calls": 2,
+            "tavily_credits": 1,
+            "credit_usage_complete": true,
+            "latency_ms": 13049.55
+          },
+          "claims": [
+            {
+              "text": "The current CEO of FictionalFreshnessCorp987654 is Ada Chen.",
+              "verdict": "uncertain",
+              "reason": "The provided evidence does not contain any information regarding FictionalFreshnessCorp987654 or Ada Chen, making it impossible to verify the claim.",
+              "validation_error": null,
+              "citations": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "reliability-live",
+      "summary": {
+        "mode": "live",
+        "run_at": "2026-11-05T16:35:33.911606+00:00",
+        "dataset": "benchmarks\\reliability-cases.json",
+        "reference_as_of": "2026-11-05",
+        "methodology": "Developer-selected bounded smoke set, not a held-out accuracy study. Labels fixed before this run using primary release pages. Ambiguous/private claims require abstention.",
+        "case_count": 5,
+        "expected_claim_count": 5,
+        "case_agreement": 0.2,
+        "claim_agreement": 0.2,
+        "extraction_recall": 0.4,
+        "extra_claim_count": 0,
+        "confusion": {
+          "outdated -> uncertain": 1,
+          "supported -> supported": 1,
+          "not_checked -> missing": 1,
+          "uncertain -> missing": 2
+        },
+        "stale_precision": null,
+        "stale_recall": 0.0,
+        "false_positive_stale": 0,
+        "false_negative_stale": 1,
+        "false_fresh_count": 0,
+        "coverage": 0.5,
+        "abstention_count": 1,
+        "citation_provenance_rate": 1.0,
+        "decisive_primary_source_count": 1,
+        "median_latency_ms": 12009.23,
+        "p95_latency_ms": 19485.94,
+        "search_calls": 2,
+        "llm_calls": 7,
+        "tavily_credits": 2,
+        "usage_complete": true,
+        "model_total_tokens": 15459,
+        "semantic_citation_entailment": "Requires human review; provenance does not prove entailment"
+      },
+      "rows": [
+        {
+          "id": "stale-python",
+          "answer": "The latest stable Python release series is 3.11.",
+          "evaluation": {
+            "claims": [
+              {
+                "text": "The latest stable Python release series is 3.11.",
+                "expected": "outdated",
+                "actual": "uncertain"
+              }
+            ],
+            "extra_claims": [],
+            "input_citation_check_pass": true,
+            "pass": false
+          },
+          "legacy_expected": null,
+          "legacy_actual": null,
+          "warnings": [],
+          "metrics": {
+            "search_calls": 1,
+            "llm_calls": 2,
+            "tavily_credits": 1,
+            "credit_usage_complete": true,
+            "latency_ms": 19485.94,
+            "model_tokens": {
+              "prompt_tokens": 3429,
+              "completion_tokens": 2577,
+              "total_tokens": 6006
+            }
+          },
+          "claims": [
+            {
+              "text": "The latest stable Python release series is 3.11.",
+              "verdict": "uncertain",
+              "reason": "Evidence quote does not match cited source",
+              "validation_error": "Evidence quote does not match cited source",
+              "citations": []
+            }
+          ]
+        },
+        {
+          "id": "current-python",
+          "answer": "The latest stable Python release series is 3.15.",
+          "evaluation": {
+            "claims": [
+              {
+                "text": "The latest stable Python release series is 3.15.",
+                "expected": "supported",
+                "actual": "supported"
+              }
+            ],
+            "extra_claims": [],
+            "input_citation_check_pass": true,
+            "pass": true
+          },
+          "legacy_expected": null,
+          "legacy_actual": null,
+          "warnings": [],
+          "metrics": {
+            "search_calls": 1,
+            "llm_calls": 2,
+            "tavily_credits": 1,
+            "credit_usage_complete": true,
+            "latency_ms": 14809.89,
+            "model_tokens": {
+              "prompt_tokens": 3429,
+              "completion_tokens": 2199,
+              "total_tokens": 5628
+            }
+          },
+          "claims": [
+            {
+              "text": "The latest stable Python release series is 3.15.",
+              "verdict": "supported",
+              "reason": "Source s2 explicitly identifies Python 3.15.1 as the latest Python 3 release, and source s3 confirms the 3.15 series entered the bugfix (stable) phase on October 9, 2026, while 3.16 remains a pre-release.",
+              "validation_error": null,
+              "citations": [
+                {
+                  "id": "s2",
+                  "url": "https://www.python.org/downloads/source",
+                  "primary": true
+                },
+                {
+                  "id": "s3",
+                  "url": "https://www.python.org/downloads",
+                  "primary": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "timeless",
+          "answer": "Water is made of hydrogen and oxygen.",
+          "evaluation": {
+            "claims": [
+              {
+                "text": "Water is made of hydrogen and oxygen.",
+                "expected": "not_checked",
+                "actual": "missing"
+              }
+            ],
+            "extra_claims": [],
+            "input_citation_check_pass": true,
+            "pass": false
+          },
+          "legacy_expected": null,
+          "legacy_actual": null,
+          "warnings": [
+            "Model output was truncated or filtered"
+          ],
+          "metrics": {
+            "search_calls": 0,
+            "llm_calls": 1,
+            "tavily_credits": 0,
+            "credit_usage_complete": true,
+            "latency_ms": 10833.07,
+            "model_tokens": {
+              "prompt_tokens": 150,
+              "completion_tokens": 1786,
+              "total_tokens": 1936
+            }
+          },
+          "claims": []
+        },
+        {
+          "id": "private-policy",
+          "answer": "My private internal service currently requires Python 3.11.",
+          "evaluation": {
+            "claims": [
+              {
+                "text": "My private internal service currently requires Python 3.11.",
+                "expected": "uncertain",
+                "actual": "missing"
+              }
+            ],
+            "extra_claims": [],
+            "input_citation_check_pass": true,
+            "pass": false
+          },
+          "legacy_expected": null,
+          "legacy_actual": null,
+          "warnings": [],
+          "metrics": {
+            "search_calls": 0,
+            "llm_calls": 1,
+            "tavily_credits": 0,
+            "credit_usage_complete": true,
+            "latency_ms": 12009.23,
+            "model_tokens": {
+              "prompt_tokens": 155,
+              "completion_tokens": 1734,
+              "total_tokens": 1889
+            }
+          },
+          "claims": []
+        },
+        {
+          "id": "unspecified-scope",
+          "answer": "The latest Python version is 3.16.",
+          "evaluation": {
+            "claims": [
+              {
+                "text": "The latest Python version is 3.16.",
+                "expected": "uncertain",
+                "actual": "missing"
+              }
+            ],
+            "extra_claims": [],
+            "input_citation_check_pass": true,
+            "pass": false
+          },
+          "legacy_expected": null,
+          "legacy_actual": null,
+          "warnings": [
+            "Upstream HTTP 429"
+          ],
+          "metrics": {
+            "search_calls": 0,
+            "llm_calls": 1,
+            "tavily_credits": 0,
+            "credit_usage_complete": true,
+            "latency_ms": 2279.41,
+            "model_tokens": {
+              "prompt_tokens": 0,
+              "completion_tokens": 0,
+              "total_tokens": 0
+            }
+          },
+          "claims": []
+        }
+      ]
+    },
+    {
+      "name": "final-live",
+      "summary": {
+        "mode": "live",
+        "run_at": "2026-11-05T16:44:33.419500+00:00",
+        "dataset": "benchmarks\\reliability-cases.json",
+        "reference_as_of": "2026-11-05",
+        "methodology": "Developer-selected bounded smoke set, not a held-out accuracy study. Labels fixed before this run using primary release pages. Ambiguous/private claims require abstention.",
+        "case_count": 2,
+        "expected_claim_count": 2,
+        "case_agreement": 0.0,
+        "claim_agreement": 0.0,
+        "extraction_recall": 0.5,
+        "extra_claim_count": 0,
+        "confusion": {
+          "outdated -> uncertain": 1,
+          "supported -> missing": 1
+        },
+        "stale_precision": null,
+        "stale_recall": 0.0,
+        "false_positive_stale": 0,
+        "false_negative_stale": 1,
+        "false_fresh_count": 0,
+        "coverage": 0.0,
+        "abstention_count": 1,
+        "citation_provenance_rate": null,
+        "decisive_primary_source_count": 0,
+        "median_latency_ms": 15148.885,
+        "p95_latency_ms": 27972.49,
+        "search_calls": 1,
+        "llm_calls": 3,
+        "tavily_credits": 1,
+        "usage_complete": true,
+        "model_total_tokens": 278,
+        "semantic_citation_entailment": "Requires human review; provenance does not prove entailment"
+      },
+      "rows": [
+        {
+          "id": "stale-python",
+          "answer": "The latest stable Python release series is 3.11.",
+          "evaluation": {
+            "claims": [
+              {
+                "text": "The latest stable Python release series is 3.11.",
+                "expected": "outdated",
+                "actual": "uncertain"
+              }
+            ],
+            "extra_claims": [],
+            "input_citation_check_pass": true,
+            "pass": false
+          },
+          "legacy_expected": null,
+          "legacy_actual": null,
+          "warnings": [],
+          "metrics": {
+            "search_calls": 1,
+            "llm_calls": 2,
+            "tavily_credits": 1,
+            "credit_usage_complete": true,
+            "latency_ms": 27972.49,
+            "model_tokens": {
+              "prompt_tokens": 199,
+              "completion_tokens": 79,
+              "total_tokens": 278
+            }
+          },
+          "claims": [
+            {
+              "text": "The latest stable Python release series is 3.11.",
+              "verdict": "uncertain",
+              "reason": "Upstream unavailable or returned invalid JSON",
+              "validation_error": null,
+              "citations": []
+            }
+          ]
+        },
+        {
+          "id": "current-python",
+          "answer": "The latest stable Python release series is 3.15.",
+          "evaluation": {
+            "claims": [
+              {
+                "text": "The latest stable Python release series is 3.15.",
+                "expected": "supported",
+                "actual": "missing"
+              }
+            ],
+            "extra_claims": [],
+            "input_citation_check_pass": true,
+            "pass": false
+          },
+          "legacy_expected": null,
+          "legacy_actual": null,
+          "warnings": [
+            "Upstream HTTP 429"
+          ],
+          "metrics": {
+            "search_calls": 0,
+            "llm_calls": 1,
+            "tavily_credits": 0,
+            "credit_usage_complete": true,
+            "latency_ms": 2325.28,
+            "model_tokens": {
+              "prompt_tokens": 0,
+              "completion_tokens": 0,
+              "total_tokens": 0
+            }
+          },
+          "claims": []
+        }
+      ]
+    }
+  ]
+}

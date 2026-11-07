@@ -1,0 +1,10 @@
+{
+  "plugins": [
+    {
+      "name": "freshnessguard",
+      "enabled": true,
+      "path": "/ABSOLUTE/PATH/freshnessguard.so",
+      "config": {"service_url": "http://127.0.0.1:8765", "timeout_ms": 150000}
+    }
+  ]
+}

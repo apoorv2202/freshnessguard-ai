@@ -1,0 +1,99 @@
+{
+  "schema_version": "1",
+  "mode": "synthetic_fixture",
+  "checked_at": "2026-11-05T16:48:32.599129+00:00",
+  "original_answer": "The latest stable version of ExampleSDK is 3.0. ExampleCloud currently costs $10 per month. Water is made of hydrogen and oxygen.",
+  "claims": [
+    {
+      "text": "The latest stable version of ExampleSDK is 3.0.",
+      "time_sensitive": true,
+      "subject": "ExampleSDK",
+      "verdict": "outdated",
+      "reason": "Synthetic fixture assessment",
+      "sources": [
+        {
+          "id": "s1",
+          "url": "https://example.com/synthetic-evidence",
+          "title": "Synthetic example \u2014 not a real source",
+          "content": "As of 2026-11-05, the latest stable version of ExampleSDK is 4.0.",
+          "published_date": "2026-11-05",
+          "retrieved_at": "2026-11-05T16:48:32.599129+00:00",
+          "primary_source": false,
+          "future_dated": false
+        }
+      ],
+      "citation_ids": [
+        "s1"
+      ],
+      "quotes": [
+        {
+          "source_id": "s1",
+          "text": "As of 2026-11-05, the latest stable version of ExampleSDK is 4.0."
+        }
+      ],
+      "correction": "As of 2026-11-05, the latest stable version of ExampleSDK is 4.0.",
+      "source_policy": {
+        "entity": null,
+        "domains": []
+      }
+    },
+    {
+      "text": "ExampleCloud currently costs $10 per month.",
+      "time_sensitive": true,
+      "subject": "ExampleCloud",
+      "verdict": "supported",
+      "reason": "Synthetic fixture assessment",
+      "sources": [
+        {
+          "id": "s1",
+          "url": "https://example.com/synthetic-evidence",
+          "title": "Synthetic example \u2014 not a real source",
+          "content": "As of 2026-11-05, ExampleCloud currently costs $10 per month.",
+          "published_date": "2026-11-05",
+          "retrieved_at": "2026-11-05T16:48:32.599129+00:00",
+          "primary_source": false,
+          "future_dated": false
+        }
+      ],
+      "citation_ids": [
+        "s1"
+      ],
+      "quotes": [
+        {
+          "source_id": "s1",
+          "text": "As of 2026-11-05, ExampleCloud currently costs $10 per month."
+        }
+      ],
+      "correction": null,
+      "source_policy": {
+        "entity": null,
+        "domains": []
+      }
+    },
+    {
+      "text": "Water is made of hydrogen and oxygen.",
+      "time_sensitive": false,
+      "subject": "Water",
+      "verdict": "not_checked",
+      "reason": "Not time-sensitive",
+      "sources": [],
+      "citation_ids": [],
+      "quotes": [],
+      "correction": null
+    }
+  ],
+  "warnings": [],
+  "metrics": {
+    "search_calls": 2,
+    "llm_calls": 3,
+    "tavily_credits": 0,
+    "credit_usage_complete": true,
+    "latency_ms": 0.3
+  },
+  "scope": "Up to 8 extracted claims; up to 5 time-sensitive claims searched. Coverage applies only to extracted time-sensitive claims.",
+  "input_citations": [],
+  "coverage": 1.0,
+  "freshness_score": 50,
+  "status": "review_required",
+  "model": null
+}

@@ -1,0 +1,86 @@
+{
+  "schema_version": "1",
+  "mode": "live",
+  "checked_at": "2026-11-05T16:43:43.111111+00:00",
+  "original_answer": "The latest stable Python release series is 3.11.",
+  "claims": [
+    {
+      "text": "The latest stable Python release series is 3.11.",
+      "time_sensitive": true,
+      "verdict": "uncertain",
+      "reason": "Upstream unavailable or returned invalid JSON",
+      "sources": [
+        {
+          "id": "s1",
+          "url": "https://discuss.python.org/t/python-latest-stable-version/24563",
+          "title": "Python latest stable version? - Python Help - Discussions on Python.org",
+          "content": "# Python latest stable version?\n\nHi All,  \nwe are planning to upgrade our python version from 3.6 to latest stable version for our project , Need help to confirm which is the latest python stable version 3.11.2 or 3.10.10 , someone please help me to get the details . we are going to upgrade the python version in our windows server , so i have to be very clear about the stable version . [...] See here. Both have stable releases.  \nIf you intend to use some of the new features of 3.11, then use that one.\n\nAnything without an \u2018a\u2019 (for alpha), \u2018b\u2019 (beta), or \u2018rc\u2019 (release candidate) suffix is a stable release. 3.11.2 is the latest. A reason to use 3.10 instead would be if a 3rd party module you wan to use will not work on 3.11 but will on 3.10. I believe that most of the widely used packages have been updated for 3.11.\n\nThank you so much",
+          "published_date": "Tue, 07 Mar 2023 18:31:58 GMT",
+          "retrieved_at": "2026-11-05T16:43:43.111111+00:00",
+          "primary_source": true,
+          "future_dated": false
+        },
+        {
+          "id": "s2",
+          "url": "https://www.python.org/doc/versions",
+          "title": "Python documentation by version | Python.org",
+          "content": "Python 3.9.25, released on 31 October 2025\n Python 3.9.24, released on 9 October 2025\n Python 3.9.23, released on 3 June 2025\n Python 3.9.22, released on 8 April 2025\n Python 3.9.21, released on 3 December 2024\n Python 3.9.20, released on 6 September 2024\n Python 3.9.19, released on 19 March 2024\n Python 3.9.18, released on 24 August 2023\n Python 3.9.17, released on 6 June 2023\n Python 3.9.16, released on 6 December 2022\n Python 3.9.15, released on 11 October 2022 [...] ### Python 3.4\n\n Python 3.4.10, released on 18 March 2019\n Python 3.4.9, released on 2 August 2018\n Python 3.4.8, released on 5 February 2018\n Python 3.4.7, released on 9 August 2017\n Python 3.4.6, released on 17 January 2017\n Python 3.4.5, released on 27 June 2016\n Python 3.4.4, released on 21 December 2015\n Python 3.4.3, released on 25 February 2015\n Python 3.4.2, released on 13 October 2014\n Python 3.4.1, released on 19 May 2014\n Python 3.4.0, released on 17 March 2014\n\n### Python 3.3 [...] ### Python 3.5\n\n Python 3.5.10, released on 5 September 2020\n Python 3.5.9, released on 2 November 2019\n Python 3.5.8, released on 29 October 2019\n Python 3.5.7, released on 18 March 2019\n Python 3.5.6, released on 2 August 2018\n Python 3.5.5, released on 5 February 2018\n Python 3.5.4, released on 8 August 2017\n Python 3.5.3, released on 17 January 2017\n Python 3.5.2, released on 27 June 2016\n Python 3.5.1, released on 7 December 2015\n Python 3.5.0, released on 13 September 2015",
+          "published_date": "Tue, 13 Nov 2012 00:00:00 GMT",
+          "retrieved_at": "2026-11-05T16:43:43.111111+00:00",
+          "primary_source": true,
+          "future_dated": false
+        },
+        {
+          "id": "s3",
+          "url": "https://www.python.org/downloads/source",
+          "title": "Python Source Releases | Python.org",
+          "content": "Notice: This page displays a fallback because interactive scripts did not run. Possible causes include disabled JavaScript or failure to load scripts or stylesheets.\n\npython\u2122\n\nDonate\n\n\u2261 Menu\n\n A A\n  + Smaller\n  + Larger\n  + Reset\n\n Socialize\n  + LinkedIn\n  + Mastodon\n  + Chat on IRC\n  + Twitter\n\n Python>>>\n Downloads>>>\n Source code\n\n# Python Source Releases\n\n Latest Python 3 Release - Python 3.15.1\n\n## Stable Releases [...] Python 2.7.15 - May 1, 2018\n  + Download Gzipped source tarball\n  + Download XZ compressed source tarball\n Python 3.6.5 - March 28, 2018\n  + Download Gzipped source tarball\n  + Download XZ compressed source tarball\n Python 3.4.8 - Feb. 5, 2018\n  + Download Gzipped source tarball\n  + Download XZ compressed source tarball\n Python 3.5.5 - Feb. 5, 2018\n  + Download Gzipped source tarball\n  + Download XZ compressed source tarball\n Python 3.6.4 - Dec. 19, 2017\n  + Download Gzipped source tarball [...] Python 3.5.7rc1 - March 4, 2019\n  + Download Gzipped source tarball\n  + Download XZ compressed source tarball\n Python 3.8.0a2 - Feb. 25, 2019\n  + Download Gzipped source tarball\n  + Download XZ compressed source tarball\n Python 2.7.16rc1 - Feb. 17, 2019\n  + Download Gzipped source tarball\n  + Download XZ compressed source tarball\n Python 3.8.0a1 - Feb. 3, 2019\n  + Download Gzipped source tarball\n  + Download XZ compressed source tarball\n Python 3.7.2rc1 - Dec. 11, 2018",
+          "published_date": "Thu, 09 Mar 2006 00:00:00 GMT",
+          "retrieved_at": "2026-11-05T16:43:43.111111+00:00",
+          "primary_source": true,
+          "future_dated": false
+        },
+        {
+          "id": "s4",
+          "url": "https://www.python.org/downloads/release/python-3140",
+          "title": "Python Release Python 3.14.0 | Python.org",
+          "content": "Notice: This page displays a fallback because interactive scripts did not run. Possible causes include disabled JavaScript or failure to load scripts or stylesheets.\n\nDonate\n\n\u2261 Menu\n\n A A\n  + Smaller\n  + Larger\n  + Reset\n\n Socialize\n  + LinkedIn\n  + Mastodon\n  + Chat on IRC\n  + Twitter\n\n# Python 3.14.0\n\nNote: Python 3.14.0 has been superseded by Python 3.14.8.\n\nRelease date: Oct. 7, 2025\n\n# This is the stable release of Python 3.14.0 [...] Python 3.14.0 is the newest major release of the Python programming language, and it contains many new features and optimisations compared to Python 3.13.\n\n# Major new features of the 3.14 series, compared to 3.13\n\nSome of the major new features and changes in Python 3.14 are:\n\n## New features",
+          "published_date": "Thu, 02 Apr 2026 17:06:39 GMT",
+          "retrieved_at": "2026-11-05T16:43:43.111111+00:00",
+          "primary_source": true,
+          "future_dated": false
+        }
+      ],
+      "citation_ids": [],
+      "quotes": [],
+      "correction": null,
+      "source_policy": {
+        "entity": "Python",
+        "domains": [
+          "python.org"
+        ]
+      },
+      "verification_error": "Upstream unavailable or returned invalid JSON"
+    }
+  ],
+  "warnings": [],
+  "metrics": {
+    "search_calls": 1,
+    "llm_calls": 2,
+    "tavily_credits": 1,
+    "credit_usage_complete": true,
+    "latency_ms": 27972.49,
+    "model_tokens": {
+      "prompt_tokens": 199,
+      "completion_tokens": 79,
+      "total_tokens": 278
+    }
+  },
+  "scope": "Up to 8 extracted claims; up to 5 time-sensitive claims searched. Coverage applies only to extracted time-sensitive claims.",
+  "input_citations": [],
+  "coverage": 0.0,
+  "freshness_score": null,
+  "status": "review_required",
+  "model": "gemini/gemini-3-flash-preview",
+  "run_note": "Captured live abstention from the interrupted paced run. This run stopped on Gemini HTTP 429; it is not a completed benchmark or final-revision validation."
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "mixed",
+    "label": "Synthetic claim report",
+    "kind": "synthetic",
+    "report_file": "synthetic-mixed.json",
+    "note": "Scripted supported/outdated/not_checked examples; no live research."
+  },
+  {
+    "id": "saved-live",
+    "label": "Saved live abstention",
+    "kind": "saved_live",
+    "report_file": "saved-live-uncertain.json",
+    "note": "Captured 2026-11-06. Original failed benchmark and historical timing/usage preserved."
+  },
+  {
+    "id": "replay",
+    "label": "Offline corrected evidence window",
+    "kind": "offline_replay",
+    "report_file": "offline-replay-outdated.json",
+    "note": "Same saved evidence, unchanged semantic guard, complete adjacent quote selected; no new model/search requests."
+  },
+  {
+    "id": "unavailable",
+    "label": "Synthetic upstream failure",
+    "kind": "synthetic",
+    "report_file": "synthetic-unavailable.json",
+    "note": "Scripted failure; null score and explicit error. Mock call count is not actual paid usage."
+  }
+]

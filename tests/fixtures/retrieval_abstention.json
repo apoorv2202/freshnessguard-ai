@@ -1,0 +1,56 @@
+{
+  "checked_at": "2026-11-06T15:43:59.412524+00:00",
+  "case": {
+    "answer": "The latest stable Python release series is 3.11.",
+    "expected_claims": [
+      {
+        "text": "The latest stable Python release series is 3.11.",
+        "verdict": "outdated"
+      }
+    ]
+  },
+  "claim": {
+    "text": "The latest stable Python release series is 3.11.",
+    "time_sensitive": true,
+    "subject": "Python release series",
+    "checked_at": "2026-11-06T15:43:59.412524+00:00",
+    "verdict": "uncertain",
+    "reason": "The provided evidence discusses Django releases and Python 3.9.7, but does not state the current latest stable Python release series as of the checked_at date.",
+    "sources": [
+      {
+        "id": "s1",
+        "url": "https://planet.python.org",
+        "title": "Planet Python",
+        "content": "# homepage\n\nskip to navigation\n\nskip to content\n\n# Planet Python\n\nLast update: November 05, 2026 07:48 PM UTC\n\n## November 05, 2026\n\n### PyCharm\n\n#### What\u2019s New in PyCharm 2026.3 [...] In accordance with our security release policy, the Django team is issuing releases for Django 6.1.3, Django 6.0.10, and Django 5.2.19. These releases address the security issues detailed below. We encourage all users of Django to upgrade as soon as possible.\n\n## CVE-2026-108147: Potential memory exhaustion in `MultiPartParser` via base64-encoded file upload [...] On the main branch\n On the 6.1 branch\n On the 6.0 branch\n On the 5.2 branch\n\n### CVE-2026-111362: Server-side request forgery via crs member of GeoJSON geometries\n\n On the main branch\n On the 6.1 branch\n On the 6.0 branch\n On the 5.2 branch\n\n### CVE-2026-113593: Potential exposure of private data via empty and missing `Vary` headers\n\n On the main branch\n On the 6.1 branch\n On the 6.0 branch\n On the 5.2 branch",
+        "published_date": "Thu, 22 Oct 2026 17:00:00 GMT",
+        "retrieved_at": "2026-11-06T15:43:59.412524+00:00",
+        "primary_source": true,
+        "source_role": "unclassified",
+        "future_dated": false
+      },
+      {
+        "id": "s2",
+        "url": "https://python.org/downloads/release/python-397",
+        "title": "Python Release Python 3.9.7 | Python.org",
+        "content": "| Version | Operating system | Description | File size | GPG | MD5 checksum |\n ---  ---  --- |\n| Gzipped source tarball | Source release | 24.6 MB | SIG | `5f463f30b1fdcb54 5f156583630318b3` |\n| XZ compressed source tarball | Source release | 18.2 MB | SIG | `fddb060b483bc018 50a3f412eea1d954` |\n| macOS 64-bit Intel installer | macOS | for macOS 10.9 and later | 28.6 MB | SIG | `ce8c2f885f26b095 36857610644260d4` | [...] BPO 38379, garbage collection does not block on resurrected objects;\n BPO 38692, os.pidfd\\_open added that allows process management without races and signals;\n BPO 39926, Unicode support updated to version 13.0.0;\n BPO 1635741, when Python is initialized multiple times in the same process, it does not leak memory anymore;\n A number of Python builtins (range, tuple, set, frozenset, list, dict) are now sped up using PEP 590 vectorcall; [...] PEP 573, Module State Access from C Extension Methods\n PEP 584, Union Operators in `dict`\n PEP 585, Type Hinting Generics In Standard Collections\n PEP 593, Flexible function and variable annotations\n PEP 602, Python adopts a stable annual release cadence\n PEP 614, Relaxing Grammar Restrictions On Decorators\n PEP 615, Support for the IANA Time Zone Database in the Standard Library\n PEP 616, String methods to remove prefixes and suffixes\n PEP 617, New PEG parser for CPython",
+        "published_date": null,
+        "retrieved_at": "2026-11-06T15:43:59.412524+00:00",
+        "primary_source": true,
+        "source_role": "version_snapshot",
+        "future_dated": false
+      }
+    ],
+    "citation_ids": [],
+    "quotes": [],
+    "correction": null,
+    "source_policy": {
+      "entity": "Python",
+      "domains": [
+        "python.org"
+      ]
+    },
+    "search_query": "Python current latest stable release series official release information as of 2026-11-06",
+    "proposed_verdict": "uncertain"
+  },
+  "note": "Saved accepted report; the model proposed uncertain and supplied no citations. No raw response or credentials are included."
+}

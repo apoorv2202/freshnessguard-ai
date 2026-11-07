@@ -1,0 +1,262 @@
+{
+  "mode": "synthetic_gateway_fixture",
+  "upstream_commit": "afdce01b50a78199f59e38117cd4d5952d038b07",
+  "passed": [
+    "normal request bypass",
+    "native plugin loaded",
+    "claim extraction through Bifrost",
+    "judging through Bifrost",
+    "cited report delivered over HTTP",
+    "answer preserved",
+    "internal calls do not recurse",
+    "streaming rejected before provider",
+    "unavailable verifier explicitly unverified",
+    "truncated provider answer is never verified",
+    "native failure includes safe structured error metadata"
+  ],
+  "fixture_end_to_end_ms": 114.71,
+  "quality_accuracy": null,
+  "report": {
+    "schema_version": "1",
+    "mode": "synthetic_gateway_fixture",
+    "checked_at": "2026-11-05T12:00:00+00:00",
+    "original_answer": "The latest stable version of ExampleSDK is 3.0. ExampleCloud currently costs $10 per month. Water is made of hydrogen and oxygen.",
+    "claims": [
+      {
+        "text": "The latest stable version of ExampleSDK is 3.0.",
+        "time_sensitive": true,
+        "subject": "ExampleSDK",
+        "checked_at": "2026-11-05T12:00:00+00:00",
+        "verdict": "outdated",
+        "reason": "Synthetic fixture assessment",
+        "sources": [
+          {
+            "id": "s1",
+            "url": "https://example.com/synthetic-evidence",
+            "title": "Synthetic example \u2014 not a real source",
+            "content": "As of 2026-11-05, the latest stable version of ExampleSDK is 4.0.",
+            "published_date": "2026-11-05",
+            "retrieved_at": "2026-11-05T12:00:00+00:00",
+            "primary_source": false,
+            "source_role": "unclassified",
+            "future_dated": false
+          }
+        ],
+        "citation_ids": [
+          "s1"
+        ],
+        "quotes": [
+          {
+            "source_id": "s1",
+            "text": "As of 2026-11-05, the latest stable version of ExampleSDK is 4.0."
+          }
+        ],
+        "correction": "As of 2026-11-05, the latest stable version of ExampleSDK is 4.0.",
+        "source_policy": {
+          "entity": null,
+          "domains": []
+        },
+        "search_query": "ExampleSDK latest stable releases downloads versions release dates",
+        "retrieval": {
+          "strategy": "release_index_first",
+          "returned_results": 1,
+          "inspected_limit": 8,
+          "selected_limit": 4,
+          "candidates": [
+            {
+              "result_position": 1,
+              "selection": "selected",
+              "url_sha256": "782d15056e904c8983f5458f536bbb5d6852f789f9f4acaf6baddbd201844ed0",
+              "host": "example.com",
+              "source_role": "unclassified",
+              "rank": [
+                1,
+                3
+              ],
+              "content_characters": 65,
+              "content_sha256": "ea8083ce08108786aab4c86e33a46dc3ed026c1e1e48a7a2c1b21554285f1d19",
+              "verifier_truncated": false,
+              "source_id": "s1"
+            }
+          ],
+          "uninspected_results": 0,
+          "selected_results": 1,
+          "judge_sources": 1
+        },
+        "source_retrieval": {
+          "status": "skipped",
+          "reason": "disabled_or_budget_reached"
+        },
+        "proposed_verdict": "outdated",
+        "proposed_assessment": {
+          "verdict": "outdated",
+          "reason": "Synthetic fixture assessment",
+          "citation_ids": [
+            "s1"
+          ],
+          "quotes": [
+            {
+              "source_id": "s1",
+              "text": "As of 2026-11-05, the latest stable version of ExampleSDK is 4.0."
+            }
+          ],
+          "correction": "As of 2026-11-05, the latest stable version of ExampleSDK is 4.0."
+        },
+        "semantic_validation": {
+          "status": "passed",
+          "reasons": [],
+          "max_evidence_age_days": 30,
+          "authority_policy": "unassessed",
+          "proof_kind": "current_latest_assertion",
+          "release_witnesses": [],
+          "release_evidence_checks": [
+            {
+              "source_id": "s1",
+              "scope": "source",
+              "eligible_authority": false,
+              "reason": "ineligible_release_authority"
+            },
+            {
+              "source_id": "s1",
+              "scope": "quote",
+              "eligible_authority": false,
+              "reason": "ineligible_release_authority"
+            }
+          ],
+          "observed_release_witnesses": [],
+          "observed_versions": [
+            "4.0"
+          ]
+        }
+      },
+      {
+        "text": "ExampleCloud currently costs $10 per month.",
+        "time_sensitive": true,
+        "subject": "ExampleCloud",
+        "checked_at": "2026-11-05T12:00:00+00:00",
+        "verdict": "supported",
+        "reason": "Synthetic fixture assessment",
+        "sources": [
+          {
+            "id": "s1",
+            "url": "https://example.com/synthetic-evidence",
+            "title": "Synthetic example \u2014 not a real source",
+            "content": "As of 2026-11-05, ExampleCloud currently costs $10 per month.",
+            "published_date": "2026-11-05",
+            "retrieved_at": "2026-11-05T12:00:00+00:00",
+            "primary_source": false,
+            "source_role": "unclassified",
+            "future_dated": false
+          }
+        ],
+        "citation_ids": [
+          "s1"
+        ],
+        "quotes": [
+          {
+            "source_id": "s1",
+            "text": "As of 2026-11-05, ExampleCloud currently costs $10 per month."
+          }
+        ],
+        "correction": null,
+        "source_policy": {
+          "entity": null,
+          "domains": []
+        },
+        "search_query": "ExampleCloud currently costs $10 per month.",
+        "retrieval": {
+          "strategy": "general",
+          "returned_results": 1,
+          "inspected_limit": 8,
+          "selected_limit": 4,
+          "candidates": [
+            {
+              "result_position": 1,
+              "selection": "selected",
+              "url_sha256": "782d15056e904c8983f5458f536bbb5d6852f789f9f4acaf6baddbd201844ed0",
+              "host": "example.com",
+              "source_role": "unclassified",
+              "rank": [
+                1,
+                3
+              ],
+              "content_characters": 61,
+              "content_sha256": "bb4fdde779b9c71f7eb97e5ccb3837b5c2fcb5e51f140f32a01f731c950e38e6",
+              "verifier_truncated": false,
+              "source_id": "s1"
+            }
+          ],
+          "uninspected_results": 0,
+          "selected_results": 1,
+          "judge_sources": 1
+        },
+        "source_retrieval": {
+          "status": "skipped",
+          "reason": "disabled_or_budget_reached"
+        },
+        "proposed_verdict": "supported",
+        "proposed_assessment": {
+          "verdict": "supported",
+          "reason": "Synthetic fixture assessment",
+          "citation_ids": [
+            "s1"
+          ],
+          "quotes": [
+            {
+              "source_id": "s1",
+              "text": "As of 2026-11-05, ExampleCloud currently costs $10 per month."
+            }
+          ],
+          "correction": null
+        }
+      },
+      {
+        "text": "Water is made of hydrogen and oxygen.",
+        "time_sensitive": false,
+        "subject": "Water",
+        "checked_at": "2026-11-05T12:00:00+00:00",
+        "verdict": "not_checked",
+        "reason": "Not time-sensitive",
+        "sources": [],
+        "citation_ids": [],
+        "quotes": [],
+        "correction": null
+      }
+    ],
+    "warnings": [],
+    "metrics": {
+      "search_calls": 2,
+      "llm_calls": 3,
+      "tavily_credits": 0,
+      "credit_usage_complete": true,
+      "source_retrieval_calls": 0,
+      "timings_ms": {
+        "extraction": 13.2215,
+        "search": 0.033,
+        "source_retrieval": 0.0,
+        "judgment": 17.4764,
+        "semantic_validation": 2.365,
+        "total": 35.64
+      },
+      "latency_ms": 35.64,
+      "model_tokens": {
+        "prompt_tokens": 30,
+        "completion_tokens": 30,
+        "total_tokens": 60
+      },
+      "model_token_usage_available": true
+    },
+    "extraction": {
+      "status": "ok",
+      "claim_count": 3,
+      "error": null
+    },
+    "errors": [],
+    "scope": "Up to 8 extracted claims; up to 5 time-sensitive claims searched. Coverage applies only to extracted time-sensitive claims.",
+    "input_citations": [],
+    "coverage": 1.0,
+    "freshness_score": 50,
+    "status": "review_required",
+    "model": "openai/fixture-model"
+  }
+}

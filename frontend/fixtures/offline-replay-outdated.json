@@ -1,0 +1,408 @@
+{
+  "schema_version": "1",
+  "mode": "offline_saved_evidence_replay",
+  "checked_at": "2026-11-06T18:02:32.934466+00:00",
+  "original_answer": "The latest stable Python release series is 3.11.",
+  "claims": [
+    {
+      "text": "The latest stable Python release series is 3.11.",
+      "time_sensitive": true,
+      "subject": "Python release series",
+      "checked_at": "2026-11-06T18:02:32.934466+00:00",
+      "verdict": "outdated",
+      "reason": "Evidence from the official Python blog and download feed indicates that multiple newer stable release series, including 3.12, 3.13, and 3.14, have been released by the checked_at date.",
+      "sources": [
+        {
+          "id": "s1",
+          "url": "https://blog.python.org/tags/releases",
+          "title": "Posts tagged \"releases\" | Python Insider",
+          "content": "releases\n\n### Python 3.12.12, 3.11.14, 3.10.19 and 3.9.24 are now available!\n\nThomas Wouters·\n\n is here!\n\nHugo van Kemenade·\n\n!Two snakes enjoying a pie with 3.14 on the top and π crimping Python 3.14.0 is now available python.org/downloads/release/python-3140/ This is the stable re...\n\nreleases\n\n### Python 3.14.0rc3 is go!\n\nHugo van Kemenade·\n\nIt’s 🪄 finally 🪄 the final 3.14 release candidate!  Note: It’s another magic release. We fixed anot...\n\nreleases [...] Hugo van Kemenade·\n\nNote: 3.15.0a4 was accidentally built against from 2025-12-23 instead of 2026-01-13, so this 3.15.0a5 is an extra release correctly built against 2026-01-14...\n\nreleases\n\n### Python 3.15.0 alpha 4\n\nHugo van Kemenade·\n\nEdit: This 3.15.0a4 was accidentally built against \\ from 2025-12-23 instead of 2026-01-13, so 3.15.0a5 is an extra release correctly built against 2026-01-1...\n\nreleases\n\n### Python 3.15.0 alpha 3\n\nHugo van Kemenade· [...] Ned Deily·\n\nPython 3.7.2 and 3.6.8 are now available. Python 3.7.2 is the next maintenance release of Python 3.7, the latest feature release of Python. You can find Pyth...\n\nreleases\n\n### Python 3.7.2rc1 and 3.6.8rc1 now available for testing\n\nNed Deily·\n\nPython 3.7.2rc1 and 3.6.8rc1 are now available. 3.7.2rc1 is the release preview of the next maintenance release of Python 3.7, the latest feature release of ...\n\nreleases\n\n### Python 3.7.1 and 3.6.7 are now available\n\nNed Deily·",
+          "published_date": null,
+          "retrieved_at": "2026-11-06T18:02:32.934466+00:00",
+          "primary_source": true,
+          "source_role": "release_index",
+          "future_dated": false
+        },
+        {
+          "id": "s2",
+          "url": "https://www.python.org/downloads/feed.rss",
+          "title": "Python Releases",
+          "content": "Python Releases Python releases from Python.orgen-usSun, 25 Oct 2026 21:02:29 +0000Python 3.11.18 date: 2026-10-25 21:02:29+00:00Sun, 25 Oct 2026 21:02:29 +0000 3.13.18 date: 2026-10-25 19:09:44+00:00Sun, 25 Oct 2026 19:09:44 +0000 3.12.16 date: 2026-10-25 18:35:25+00:00Sun, 25 Oct 2026 18:35:25 +0000 3.14.10 date: 2026-10-25 04:15:45+00:00Sun, 25 Oct 2026 04:15:45 +0000 3.15.2 date: 2026-10-25 04:15:38+00:00Sun, 25 Oct 2026 04:15:38 +0000 3.13.17 date: 2026-10-21 14:22:30+00:00Wed, 21 Oct 2026 [...] 21 Oct 2026 14:22:30 +0000 3.14.9 date: 2026-10-21 13:08:09+00:00Wed, 21 Oct 2026 13:08:09 +0000 3.15.1 date: 2026-10-21 09:59:50+00:00Wed, 21 Oct 2026 09:59:50 +0000 3.16.0a1 date: 2026-10-13 19:02:12+00:00Tue, 13 Oct 2026 19:02:12 +0000 install manager 26.4 date: 2026-10-09 14:58:02+00:00Fri, 09 Oct 2026 14:58:02 +0000",
+          "published_date": null,
+          "retrieved_at": "2026-11-06T18:02:32.934466+00:00",
+          "primary_source": true,
+          "source_role": "unclassified",
+          "future_dated": false
+        },
+        {
+          "id": "s3",
+          "url": "https://blog.python.org/blog/3",
+          "title": "Blog - Page 3 | Python Insider",
+          "content": "releases\n\n### Python 3.12.12, 3.11.14, 3.10.19 and 3.9.24 are now available!\n\nThomas Wouters·\n\n is here!\n\nHugo van Kemenade·\n\n!Two snakes enjoying a pie with 3.14 on the top and π crimping Python 3.14.0 is now available python.org/downloads/release/python-3140/ This is the stable re...\n\nreleases\n\n### Python 3.14.0rc3 is go!\n\nHugo van Kemenade·\n\nIt’s 🪄 finally 🪄 the final 3.14 release candidate!  Note: It’s another magic release. We fixed anot...\n\nreleases [...] Hugo van Kemenade·\n\nNote: 3.15.0a4 was accidentally built against from 2025-12-23 instead of 2026-01-13, so this 3.15.0a5 is an extra release correctly built against 2026-01-14...\n\nreleases\n\n### Python 3.15.0 alpha 4\n\nHugo van Kemenade·\n\nEdit: This 3.15.0a4 was accidentally built against \\ from 2025-12-23 instead of 2026-01-13, so 3.15.0a5 is an extra release correctly built against 2026-01-1...\n\nreleases\n\n### Python 3.15.0 alpha 3\n\nHugo van Kemenade· [...] # All Posts\n\n349 posts · Page 3 of 18\n\n### Python 3.15.0 alpha 7\n\nHugo van Kemenade·\n\nThe penultimate 3.15 alpha is out!\n\n### CPython: 36 Years of Source Code\n\nStan Ulbrych·\n\nAn analysis of the growth of CPython's codebase from its first commits to the present day\n\nhistory\n\n### Python 3.12.13, 3.11.15 and 3.10.20 are now available!\n\nThomas Wouters·\n\nPython Releases For Your Security! New security releases for 3.10, 3.11 and 3.12 are now available.\n\nreleases",
+          "published_date": "Tue, 17 Dec 2024 00:00:00 GMT",
+          "retrieved_at": "2026-11-06T18:02:32.934466+00:00",
+          "primary_source": true,
+          "source_role": "unclassified",
+          "future_dated": false
+        },
+        {
+          "id": "s4",
+          "url": "https://blog.python.org/blog/year/2025",
+          "title": "2025 Posts | Python Insider",
+          "content": "releases\n\n### Python 3.12.12, 3.11.14, 3.10.19 and 3.9.24 are now available!\n\nThomas Wouters·\n\n is here!\n\nHugo van Kemenade·\n\n!Two snakes enjoying a pie with 3.14 on the top and π crimping Python 3.14.0 is now available python.org/downloads/release/python-3140/ This is the stable re...\n\nreleases\n\n### Python 3.14.0rc3 is go!\n\nHugo van Kemenade·\n\nIt’s 🪄 finally 🪄 the final 3.14 release candidate!  Note: It’s another magic release. We fixed anot...\n\nreleases [...] releases\n\n### Python 3.13.10 is now available, too, you know!\n\nThomas Wouters·\n\nThe latest version of Python 3.13 is now available! Python 3.13.10  This is the tenth maintenance rel...\n\nreleases\n\n### Python 3.14.1 is now available!\n\nHugo van Kemenade·\n\n!Two snakes enjoying a pie with 3.14 on the top and π crimping This is first maintenance release of Python 3.14 Python 3.14.1 is the first maintenance release...\n\nreleases\n\n### Python 3.15.0 alpha 2\n\nHugo van Kemenade· [...] releases\n\n### Python 3.14.0rc2 and 3.13.7 are go!\n\nHugo van Kemenade·\n\nNot one but two expedited releases! 🎉 🎉 Python 3.14.0rc2 It’s the ~final~ 🪄 penultimate 🪄 3.14 release candidate! \n\nreleases\n\n### Python 3.13.6 is now available\n\nThomas Wouters·\n\nThe latest version of Python 3.13 is now available! []( 3.13...\n\n### Python 3.14 release candidate 1 is go!\n\nHugo van Kemenade·\n\nIt’s the first 3.14 release candidate!  This is the first release candidate of Python 3.14 This relea...\n\nreleases",
+          "published_date": "Tue, 16 Dec 2025 00:00:00 GMT",
+          "retrieved_at": "2026-11-06T18:02:32.934466+00:00",
+          "primary_source": true,
+          "source_role": "unclassified",
+          "future_dated": false
+        },
+        {
+          "id": "s5",
+          "url": "https://www.python.org/downloads/release/python-3140/",
+          "title": "Retrieved official page",
+          "content": "Notice: This page displays a fallback because interactive scripts did not run. Possible causes include disabled JavaScript or failure to load scripts or stylesheets.\n\nDonate\n\n≡ Menu\n\nSearch This Site\n\nGO\n\nSocialize\n\nLinkedIn\n\nMastodon\n\nChat on IRC\n\nTwitter\n\nPython 3.14.0\n\nNote: Python 3.14.0 has been superseded by Python 3.14.10.\n\nRelease date: Oct. 7, 2025\n\nThis is the stable release of Python 3.14.0\n\nPython 3.14.0 is the newest major release of the Python programming language, and it contains many new features and optimisations compared to Python 3.13.\n\nMajor new features of the 3.14 series, compared to 3.13\n\nSome of the major new features and changes in Python 3.14 are:\n\nNew features\n\nPEP 779: Free-threaded Python is officially supported\n\nPEP 649: The evaluation of annotations is now deferred, improving the semantics of using annotations.\n\nPEP 750: Template string literals (t-strings) for custom string processing, using the familiar syntax of f-strings.\n\nPEP 734: Multiple interpreters in the stdlib.\n\nPEP 784: A new module compression.zstd providing support for the Zstandard compression algorithm.\n\nPEP 758: except and except* expressions may now omit the brackets.\n\nSyntax highlighting in PyREPL, and support for color in unittest, argparse, json and calendar CLIs.\n\nPEP 768: A zero-overhead external debugger interface for CPython.\n\nUUID versions 6-8 are now supported by the uuid module, and generation of versions 3-5 are up to 40% faster.\n\nPEP 765: Disallow return/break/continue that exit a finally block.\n\nPEP 741: An improved C API for configuring Python.\n\nA new type of interpreter. For certain newer compilers, this interpreter provides significantly better performance. Opt-in for now, requires building from source.\n\nImproved error messages.\n\nBuiltin implementation of HMAC with formally verified code from the HACL* project.\n\nA new command-line interface to inspect running Python processes using asynchronous tasks.\n\nThe pdb module now supports remote attaching to a running Python process.\n\nFor more details on the changes to Python 3.14, see What’s new in Python 3.14.\n\nBuild changes\n\nPEP 761: Python 3.14 and onwards no longer provides PGP signatures for release artifacts. Instead, Sigstore is recommended for verifiers.\n\nOfficial macOS and Windows release binaries include an experimental JIT compiler.\n\nOfficial Android binary releases are now available.\n\nIncompatible changes, removals and new deprecations\n\nIncompatible changes\n\nPython removals and deprecations\n\nC API removals and deprecations\n\nOverview of all pending deprecations\n\nPython install manager\n\nThe installer we offer for Windows is being replaced by our new install manager, which can be installed from the Windows Store or from its download page. See our documentation for more information. The JSON file available for download below contains the list of all the installable packages available as part of this release, including file URLs and hashes, but is not required to install the latest release. The traditional installer will remain available throughout the 3.14 and 3.15 releases.\n\nMore resources\n\nOnline documentation\n\nPEP 745, 3.14 Release Schedule\n\nReport bugs at github.com/python/cpython/issues\n\nHelp fund Python directly (or via GitHub Sponsors) and support the Python community\n\nAnd now for something completely different\n\nEdgar Allen Poe died on 7th October 1849.\n\nAs we all recall from 3.14.0a1, piphilology is the creation of mnemonics to help memorise the digits of π, and the number of letters in each word in a pi-poem (or \"piem\") successively correspond to the digits of π.\n\nIn 1995, Mike Keith, an American mathematician and author of constrained writing, retold Poe's The Raven as a 740-word piem. Here's the first two stanzas of Near A Raven:\n\nPoe, E.\n\nNear a Raven\n\nMidnights so dreary, tired and weary.\n\nSilently pondering volumes extolling all by-now obsolete lore.\n\nDuring my rather long nap - the weirdest tap!\n\nAn ominous vibrating sound disturbing my chamber's antedoor.\n\n\"This\", I whispered quietly, \"I ignore\".\n\nPerfectly, the intellect remembers: the ghostly fires, a glittering ember.\n\nInflamed by lightning's outbursts, windows cast penumbras upon this floor.\n\nSorrowful, as one mistreated, unhappy thoughts I heeded:\n\nThat inimitable lesson in elegance - Lenore -\n\nIs delighting, exciting...nevermore.\n\nEnjoy the new release\n\nThanks to all of the many volunteers who help make Python Development and these releases possible! Please consider supporting our efforts by volunteering yourself or through organisation contributions to the Python Software Foundation.\n\nFull Changelog\n\nFiles\n\nmacOS\n\nDownload macOS 64-bit universal2 installer\n\nWindows\n\nDownload Python install manager\n\nSource release\n\nDownload XZ compressed source tarball\n\nVersion Operating system Description File size Sigstore SBOM MD5 checksum\n\nGzipped source tarball Source release 29.2 MB .sigstore SPDX 2ba6baae1e7c56f652195327d3becd64\n\nXZ compressed source tarball Source release 22.5 MB .sigstore SPDX 41389edaf9c643263cbed9b5ed307df8\n\nAndroid embeddable package (aarch64) Android 19.9 MB .sigstore be1f8e3ec0752f5bbaf6e029e0a870c0\n\nAndroid embeddable package (x86_64) Android 20.2 MB .sigstore c9795011cd212f75303bb4fac18e6f0d\n\nmacOS 64-bit universal2 installer macOS for macOS 10.15 and later 70.9 MB .sigstore d89338ba3e64cd80f9cc890280933e6c\n\nWindows installer (64-bit) Windows Recommended 28.5 MB .sigstore SPDX cf642108b97545a30ac055b94657a0e6\n\nWindows installer (32-bit) Windows 27.1 MB .sigstore SPDX 4b4a8f4e6f47a430df110868b3872762\n\nWindows installer (ARM64) Windows Experimental 27.8 MB .sigstore SPDX 1d308e03a711d99ad7c5df4032daf8a9\n\nWindows embeddable package (64-bit) Windows 11.4 MB .sigstore SPDX 7c5d8d8e3213a11bd0e36f8b8eb03431\n\nWindows embeddable package (32-bit) Windows 10.1 MB .sigstore SPDX c21d08efbf4d7adb64505577c197bd08\n\nWindows embeddable package (ARM64) Windows 10.8 MB .sigstore SPDX e207670ef0d54dca3681c9e4137a4774\n\nWindows release manifest Windows Install with 'py install 3.14' 14.6 KB .sigstore 1f8f0ad1876492476cbc02155976dc21",
+          "published_date": null,
+          "retrieved_at": "2026-11-06T18:02:32.934466+00:00",
+          "primary_source": true,
+          "source_role": "version_snapshot",
+          "future_dated": false,
+          "acquisition": {
+            "method": "direct_https_visible_text_v1",
+            "url": "https://www.python.org/downloads/release/python-3140/",
+            "parent_source_id": "s1",
+            "discovery": "snippet_link",
+            "original_reference": "python.org/downloads/release/python-3140/",
+            "body_sha256": "28e96074332e8fb4d84407ab8cc66d175dceb200eba0faaff72f7800b7903c2b",
+            "text_sha256": "f7c8c5c4bad80a994f5e3d230066817597173aa08f6319af0e7a23d391a69462",
+            "bytes": 53931,
+            "text_truncated": false,
+            "content_type": "text/html"
+          }
+        }
+      ],
+      "citation_ids": [
+        "s5"
+      ],
+      "quotes": [
+        {
+          "source_id": "s5",
+          "text": "Release date: Oct. 7, 2025\n\nThis is the stable release of Python 3.14.0"
+        }
+      ],
+      "correction": "Python 3.14.0",
+      "source_policy": {
+        "entity": "Python",
+        "domains": [
+          "python.org"
+        ],
+        "release_indexes": [
+          "https://www.python.org/downloads/",
+          "https://devguide.python.org/versions/"
+        ],
+        "retrieval_rules": [
+          {
+            "host": "www.python.org",
+            "path": "/downloads/(?:release/[a-zA-Z0-9-]+/)?"
+          },
+          {
+            "host": "devguide.python.org",
+            "path": "/versions/"
+          }
+        ],
+        "exclude_domains": [
+          "planet.python.org",
+          "discuss.python.org"
+        ]
+      },
+      "search_query": "Python latest stable releases downloads versions release dates https://www.python.org/downloads/ https://devguide.python.org/versions/",
+      "retrieval": {
+        "strategy": "release_index_first",
+        "returned_results": 8,
+        "inspected_limit": 8,
+        "selected_limit": 4,
+        "candidates": [
+          {
+            "result_position": 1,
+            "selection": "selected",
+            "url_sha256": "c0e40d32009ef1b356cb51d9a87a426bd12d8b43a5c281d2aa0614a83f95c971",
+            "host": "www.python.org",
+            "source_role": "unclassified",
+            "rank": [
+              0,
+              3
+            ],
+            "content_characters": 828,
+            "content_sha256": "8a38a1987ad9030a9fda2efe8a94003e0bdf9d48934cd996de352a1e628df423",
+            "verifier_truncated": false,
+            "source_id": "s2"
+          },
+          {
+            "result_position": 2,
+            "selection": "invalid_url_or_content",
+            "url_sha256": "c0ff05443c3819694a264a72eb699953c256b39e9e3c089db8ba21651e35b7e3"
+          },
+          {
+            "result_position": 3,
+            "selection": "selected",
+            "url_sha256": "88088005be38d8cf08a707de901cb817c08fd3ea314917bd93d3e3bab2f9ce4e",
+            "host": "blog.python.org",
+            "source_role": "unclassified",
+            "rank": [
+              0,
+              3
+            ],
+            "content_characters": 1389,
+            "content_sha256": "c3045f2a70d275467c676c97058a40a248a2032fc37b6766583ec8fed7593ba3",
+            "verifier_truncated": false,
+            "source_id": "s3"
+          },
+          {
+            "result_position": 4,
+            "selection": "selected",
+            "url_sha256": "ff65b12ce36e3c61403b98dfe9aaa6591db2a0e0ce8ab66a23f9e6b1bc32d37b",
+            "host": "blog.python.org",
+            "source_role": "release_index",
+            "rank": [
+              0,
+              1
+            ],
+            "content_characters": 1412,
+            "content_sha256": "466f6373a8ceba69767b7bf036928af723350c318c4d85838c080d002bf998b6",
+            "verifier_truncated": false,
+            "source_id": "s1"
+          },
+          {
+            "result_position": 5,
+            "selection": "selected",
+            "url_sha256": "fc6325560583f0e4df89371fb0d42ba4dfd335ac33cbaa3cf8f66f9ed4ba81dd",
+            "host": "blog.python.org",
+            "source_role": "unclassified",
+            "rank": [
+              0,
+              3
+            ],
+            "content_characters": 1437,
+            "content_sha256": "558e32f90062a96325734ca4e941020e42737e982afee5a523d127f94f032db2",
+            "verifier_truncated": false,
+            "source_id": "s4"
+          },
+          {
+            "result_position": 6,
+            "selection": "selection_cap",
+            "url_sha256": "7764aa97d5b62c3494cb32f395b03eeec6f32324ed42f2f594419e690b6f51c8",
+            "host": "blog.python.org",
+            "source_role": "unclassified",
+            "rank": [
+              0,
+              3
+            ],
+            "content_characters": 613,
+            "content_sha256": "2a3a711ec46b806f8f8da2a4885255818dbf94a07a0249eae88a3c8eed50f865",
+            "verifier_truncated": false
+          },
+          {
+            "result_position": 7,
+            "selection": "selection_cap",
+            "url_sha256": "5c9c3c9a286c350fe97aeeff57767ff62ec6278b82782b122a8a03c87f1faf73",
+            "host": "blog.python.org",
+            "source_role": "unclassified",
+            "rank": [
+              0,
+              3
+            ],
+            "content_characters": 1456,
+            "content_sha256": "f0811d35050af822b5a3b8a192a1404e8a63d35837bfc8a357cd42595e5b8ad4",
+            "verifier_truncated": false
+          },
+          {
+            "result_position": 8,
+            "selection": "selection_cap",
+            "url_sha256": "049b2c57e628a56c219506fb201ddef3a77a7e1223af2f4036088115daee2703",
+            "host": "blog.python.org",
+            "source_role": "unclassified",
+            "rank": [
+              0,
+              3
+            ],
+            "content_characters": 1435,
+            "content_sha256": "468e571a4a35d2ad400252936445e14be44096ddd2cf7016c5c08a275a723092",
+            "verifier_truncated": false
+          }
+        ],
+        "uninspected_results": 0,
+        "selected_results": 4,
+        "judge_sources": 5
+      },
+      "source_retrieval": {
+        "status": "ok",
+        "reason": "insufficient_release_snippets",
+        "url": "https://www.python.org/downloads/release/python-3140/",
+        "parent_source_id": "s1",
+        "discovery": "snippet_link",
+        "original_reference": "python.org/downloads/release/python-3140/",
+        "source_id": "s5"
+      },
+      "proposed_verdict": "outdated",
+      "proposed_assessment": {
+        "verdict": "outdated",
+        "reason": "Evidence from the official Python blog and download feed indicates that multiple newer stable release series, including 3.12, 3.13, and 3.14, have been released by the checked_at date.",
+        "citation_ids": [
+          "s5"
+        ],
+        "quotes": [
+          {
+            "source_id": "s5",
+            "text": "This is the stable release of Python 3.14.0"
+          }
+        ],
+        "correction": "Python 3.14.0"
+      },
+      "quote_windows": [
+        {
+          "source_id": "s5",
+          "method": "adjacent_dated_release_span_v1",
+          "original_quote": "This is the stable release of Python 3.14.0",
+          "selected_quote": "Release date: Oct. 7, 2025\n\nThis is the stable release of Python 3.14.0",
+          "start": 333,
+          "end": 404
+        }
+      ],
+      "semantic_validation": {
+        "status": "passed",
+        "reasons": [],
+        "max_evidence_age_days": 30,
+        "authority_policy": "official_required",
+        "proof_kind": "newer_dated_stable_release",
+        "release_witnesses": [
+          {
+            "source_id": "s5",
+            "version": "3.14",
+            "date": "2025-10-07",
+            "date_kind": "release_date"
+          }
+        ],
+        "release_evidence_checks": [
+          {
+            "source_id": "s1",
+            "scope": "source",
+            "eligible_authority": true,
+            "examined_passages": 67,
+            "accepted_passages": 0,
+            "rejected_passage_counts": {
+              "explicit_stable_or_final_channel_missing": 40,
+              "entity_not_matched": 20,
+              "version_not_unique_in_passage": 5,
+              "preview_planned_negated_or_withdrawn_release": 2
+            },
+            "parsed_facts": 0
+          },
+          {
+            "source_id": "s2",
+            "scope": "source",
+            "eligible_authority": true,
+            "examined_passages": 0,
+            "accepted_passages": 0,
+            "rejected_passage_counts": {
+              "no_passage_within_800_character_bound": 1
+            },
+            "parsed_facts": 0
+          },
+          {
+            "source_id": "s3",
+            "scope": "source",
+            "eligible_authority": true,
+            "examined_passages": 79,
+            "accepted_passages": 0,
+            "rejected_passage_counts": {
+              "explicit_stable_or_final_channel_missing": 37,
+              "entity_not_matched": 35,
+              "version_not_unique_in_passage": 5,
+              "preview_planned_negated_or_withdrawn_release": 2
+            },
+            "parsed_facts": 0
+          },
+          {
+            "source_id": "s4",
+            "scope": "source",
+            "eligible_authority": true,
+            "examined_passages": 80,
+            "accepted_passages": 0,
+            "rejected_passage_counts": {
+              "explicit_stable_or_final_channel_missing": 55,
+              "entity_not_matched": 11,
+              "version_not_unique_in_passage": 5,
+              "preview_planned_negated_or_withdrawn_release": 9
+            },
+            "parsed_facts": 0
+          },
+          {
+            "source_id": "s5",
+            "scope": "source",
+            "eligible_authority": true,
+            "examined_passages": 85,
+            "accepted_passages": 1,
+            "rejected_passage_counts": {
+              "entity_not_matched": 52,
+              "explicit_stable_or_final_channel_missing": 27,
+              "version_not_unique_in_passage": 4,
+              "explicit_release_or_effective_date_missing": 1
+            },
+            "parsed_facts": 1
+          },
+          {
+            "source_id": "s5",
+            "scope": "quote",
+            "eligible_authority": true,
+            "examined_passages": 3,
+            "accepted_passages": 1,
+            "rejected_passage_counts": {
+              "entity_not_matched": 1,
+              "explicit_release_or_effective_date_missing": 1
+            },
+            "parsed_facts": 1
+          }
+        ],
+        "observed_release_witnesses": [
+          {
+            "source_id": "s5",
+            "version": "3.14",
+            "date": "2025-10-07",
+            "date_kind": "release_date"
+          }
+        ],
+        "observed_versions": []
+      }
+    }
+  ],
+  "warnings": [
+    "Offline replay only. The original live benchmark returned uncertain."
+  ],
+  "metrics": {
+    "llm_calls": 0,
+    "search_calls": 0,
+    "source_retrieval_calls": 0,
+    "tavily_credits": 0,
+    "credit_usage_complete": true,
+    "latency_ms": 38.2083,
+    "timings_ms": {
+      "extraction": 0,
+      "search": 0,
+      "source_retrieval": 0,
+      "judgment": 0,
+      "semantic_validation": 38.2083,
+      "total": 38.2083
+    }
+  },
+  "extraction": {
+    "status": "ok",
+    "claim_count": 1,
+    "error": null
+  },
+  "errors": [],
+  "scope": "Offline reclassification of saved public evidence; no API calls.",
+  "input_citations": [],
+  "coverage": 1.0,
+  "freshness_score": 0,
+  "status": "review_required",
+  "model": null
+}

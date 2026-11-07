@@ -1,0 +1,51 @@
+{
+  "schema_version": "1",
+  "mode": "synthetic_fixture",
+  "checked_at": "2026-11-06T12:00:00+00:00",
+  "original_answer": "The latest stable Python release series is 3.11.",
+  "claims": [],
+  "warnings": [
+    "Synthetic upstream unavailable"
+  ],
+  "metrics": {
+    "search_calls": 0,
+    "llm_calls": 1,
+    "tavily_credits": 0,
+    "credit_usage_complete": true,
+    "source_retrieval_calls": 0,
+    "timings_ms": {
+      "extraction": 0.7048,
+      "search": 0.0,
+      "source_retrieval": 0.0,
+      "judgment": 0.0,
+      "semantic_validation": 0.0,
+      "total": 0.81
+    },
+    "latency_ms": 0.81
+  },
+  "extraction": {
+    "status": "failed",
+    "error": {
+      "stage": "extraction",
+      "category": "unavailable",
+      "code": "network_error",
+      "http_status": null,
+      "retryable": true
+    }
+  },
+  "errors": [
+    {
+      "stage": "extraction",
+      "category": "unavailable",
+      "code": "network_error",
+      "http_status": null,
+      "retryable": true
+    }
+  ],
+  "scope": "Up to 8 extracted claims; up to 5 time-sensitive claims searched. Coverage applies only to extracted time-sensitive claims.",
+  "input_citations": [],
+  "coverage": 0,
+  "freshness_score": null,
+  "status": "unavailable",
+  "model": null
+}

@@ -1,0 +1,67 @@
+{
+  "checked_at": "2026-11-06T15:23:46.678923+00:00",
+  "claim": {
+    "text": "The latest stable Python release series is 3.11.",
+    "subject": "Python release series",
+    "time_sensitive": true,
+    "sources": [
+      {
+        "id": "s1",
+        "url": "https://discuss.python.org/t/python-latest-stable-version/24563",
+        "title": "Python latest stable version? - Python Help - Discussions on Python.org",
+        "content": "# Python latest stable version?\n\nHi All,  \nwe are planning to upgrade our python version from 3.6 to latest stable version for our project , Need help to confirm which is the latest python stable version 3.11.2 or 3.10.10 , someone please help me to get the details . we are going to upgrade the python version in our windows server , so i have to be very clear about the stable version . [...] See here. Both have stable releases.  \nIf you intend to use some of the new features of 3.11, then use that one.\n\nAnything without an \u2018a\u2019 (for alpha), \u2018b\u2019 (beta), or \u2018rc\u2019 (release candidate) suffix is a stable release. 3.11.2 is the latest. A reason to use 3.10 instead would be if a 3rd party module you wan to use will not work on 3.11 but will on 3.10. I believe that most of the widely used packages have been updated for 3.11.\n\nThank you so much",
+        "published_date": "Tue, 07 Mar 2023 18:31:58 GMT",
+        "retrieved_at": "2026-11-06T15:23:46.678923+00:00",
+        "primary_source": true,
+        "future_dated": false
+      },
+      {
+        "id": "s2",
+        "url": "https://www.python.org/downloads/release/python-390",
+        "title": "Python Release Python 3.9.0 | Python.org",
+        "content": "Note: Python 3.9.0 has been superseded by Python 3.9.25.\n\nRelease date: Oct. 5, 2020\n\n## This is the stable release of Python 3.9.0\n\nNote: The release you're looking at is Python 3.9.0, a legacy release. Python 3.11 is now the latest feature release series of Python 3. Get the latest release of 3.11.x here.\n\n## Installer news [...] A number of Python modules (\\_abc, audioop, \\_bz2, \\_codecs, \\_contextvars, \\_crypt, \\_functools, \\_json, \\_locale, operator, resource, time, \\_weakref) now use multiphase initialization as defined by PEP 489;\n A number of standard library modules (audioop, ast, grp, \\_hashlib, pwd, \\_posixsubprocess, random, select, struct, termios, zlib) are now using the stable ABI defined by PEP 384. [...] PEP 573, Module State Access from C Extension Methods\n PEP 584, Union Operators in `dict`\n PEP 585, Type Hinting Generics In Standard Collections\n PEP 593, Flexible function and variable annotations\n PEP 602, Python adopts a stable annual release cadence\n PEP 614, Relaxing Grammar Restrictions On Decorators\n PEP 615, Support for the IANA Time Zone Database in the Standard Library\n PEP 616, String methods to remove prefixes and suffixes\n PEP 617, New PEG parser for CPython",
+        "published_date": "Fri, 31 Oct 2025 00:00:00 GMT",
+        "retrieved_at": "2026-11-06T15:23:46.678923+00:00",
+        "primary_source": true,
+        "future_dated": false
+      },
+      {
+        "id": "s3",
+        "url": "https://python.org/downloads/release/python-390",
+        "title": "Python Release Python 3.9.0 | Python.org",
+        "content": "Note: Python 3.9.0 has been superseded by Python 3.9.25.\n\nRelease date: Oct. 5, 2020\n\n## This is the stable release of Python 3.9.0\n\nNote: The release you're looking at is Python 3.9.0, a legacy release. Python 3.11 is now the latest feature release series of Python 3. Get the latest release of 3.11.x here.\n\n## Installer news [...] A number of Python modules (\\_abc, audioop, \\_bz2, \\_codecs, \\_contextvars, \\_crypt, \\_functools, \\_json, \\_locale, operator, resource, time, \\_weakref) now use multiphase initialization as defined by PEP 489;\n A number of standard library modules (audioop, ast, grp, \\_hashlib, pwd, \\_posixsubprocess, random, select, struct, termios, zlib) are now using the stable ABI defined by PEP 384. [...] PEP 573, Module State Access from C Extension Methods\n PEP 584, Union Operators in `dict`\n PEP 585, Type Hinting Generics In Standard Collections\n PEP 593, Flexible function and variable annotations\n PEP 602, Python adopts a stable annual release cadence\n PEP 614, Relaxing Grammar Restrictions On Decorators\n PEP 615, Support for the IANA Time Zone Database in the Standard Library\n PEP 616, String methods to remove prefixes and suffixes\n PEP 617, New PEG parser for CPython",
+        "published_date": null,
+        "retrieved_at": "2026-11-06T15:23:46.678923+00:00",
+        "primary_source": true,
+        "future_dated": false
+      }
+    ],
+    "source_policy": {
+      "entity": "Python",
+      "domains": [
+        "python.org"
+      ]
+    }
+  },
+  "reconstructed_decision": {
+    "verdict": "supported",
+    "reason": "Multiple sources from the official Python website and community discussions confirm that Python 3.11 is the latest stable feature release series.",
+    "citation_ids": [
+      "s1",
+      "s2"
+    ],
+    "quotes": [
+      {
+        "source_id": "s1",
+        "text": "3.11.2 is the latest. A reason to use 3.10 instead would be if a 3rd party module you wan to use will not work on 3.11 but will on 3.10."
+      },
+      {
+        "source_id": "s2",
+        "text": "Python 3.11 is now the latest feature release series of Python 3."
+      }
+    ],
+    "correction": null,
+    "evidence_conflict": false
+  },
+  "note": "Decision reconstructed from accepted report fields; evidence_conflict=false is inferred from the old validator accepting it, not a saved raw model response."
+}

@@ -1,0 +1,97 @@
+{
+  "schema_version": "1",
+  "mode": "live",
+  "checked_at": "2026-11-05T16:34:53.972463+00:00",
+  "original_answer": "The latest stable Python release series is 3.15.",
+  "claims": [
+    {
+      "text": "The latest stable Python release series is 3.15.",
+      "time_sensitive": true,
+      "verdict": "supported",
+      "reason": "Source s2 explicitly identifies Python 3.15.1 as the latest Python 3 release, and source s3 confirms the 3.15 series entered the bugfix (stable) phase on October 9, 2026, while 3.16 remains a pre-release.",
+      "sources": [
+        {
+          "id": "s1",
+          "url": "https://www.python.org/doc/versions",
+          "title": "Python documentation by version | Python.org",
+          "content": "Python 2.7.18, released on 20 April 2020\n Python 2.7.17, released on 19 October 2019\n Python 2.7.16, released on 4 March 2019\n Python 2.7.15, released on 1 May 2018\n Python 2.7.14, released on 16 September 2017\n Python 2.7.13, released on 17 December 2016\n Python 2.7.12, released on 25 June 2016\n Python 2.7.11, released on 5 December 2015\n Python 2.7.10, released on 23 May 2015\n Python 2.7.9, released on 10 December 2014\n Python 2.7.8, released on 2 July 2014 [...] Python 3.12.16, released on 25 October 2026\n Python 3.12.15, released on 30 September 2026\n Python 3.12.14, released on 12 August 2026\n Python 3.12.13, released on 3 March 2026\n Python 3.12.12, released on 9 October 2025\n Python 3.12.11, released on 3 June 2025\n Python 3.12.10, released on 8 April 2025\n Python 3.12.9, released on 4 February 2025\n Python 3.12.8, released on 3 December 2024\n Python 3.12.7, released on 1 October 2024\n Python 3.12.6, released on 6 September 2024 [...] ### Python 3.4\n\n Python 3.4.10, released on 18 March 2019\n Python 3.4.9, released on 2 August 2018\n Python 3.4.8, released on 5 February 2018\n Python 3.4.7, released on 9 August 2017\n Python 3.4.6, released on 17 January 2017\n Python 3.4.5, released on 27 June 2016\n Python 3.4.4, released on 21 December 2015\n Python 3.4.3, released on 25 February 2015\n Python 3.4.2, released on 13 October 2014\n Python 3.4.1, released on 19 May 2014\n Python 3.4.0, released on 17 March 2014\n\n### Python 3.3",
+          "published_date": "Tue, 13 Nov 2012 00:00:00 GMT",
+          "retrieved_at": "2026-11-05T16:34:53.972463+00:00",
+          "primary_source": true,
+          "future_dated": false
+        },
+        {
+          "id": "s2",
+          "url": "https://www.python.org/downloads/source",
+          "title": "Python Source Releases | Python.org",
+          "content": "Notice: This page displays a fallback because interactive scripts did not run. Possible causes include disabled JavaScript or failure to load scripts or stylesheets.\n\npython\u2122\n\nDonate\n\n\u2261 Menu\n\n A A\n  + Smaller\n  + Larger\n  + Reset\n\n Socialize\n  + LinkedIn\n  + Mastodon\n  + Chat on IRC\n  + Twitter\n\n Python>>>\n Downloads>>>\n Source code\n\n# Python Source Releases\n\n Latest Python 3 Release - Python 3.15.1\n\n## Stable Releases [...] Python 2.7.15 - May 1, 2018\n  + Download Gzipped source tarball\n  + Download XZ compressed source tarball\n Python 3.6.5 - March 28, 2018\n  + Download Gzipped source tarball\n  + Download XZ compressed source tarball\n Python 3.4.8 - Feb. 5, 2018\n  + Download Gzipped source tarball\n  + Download XZ compressed source tarball\n Python 3.5.5 - Feb. 5, 2018\n  + Download Gzipped source tarball\n  + Download XZ compressed source tarball\n Python 3.6.4 - Dec. 19, 2017\n  + Download Gzipped source tarball [...] Python 3.5.7rc1 - March 4, 2019\n  + Download Gzipped source tarball\n  + Download XZ compressed source tarball\n Python 3.8.0a2 - Feb. 25, 2019\n  + Download Gzipped source tarball\n  + Download XZ compressed source tarball\n Python 2.7.16rc1 - Feb. 17, 2019\n  + Download Gzipped source tarball\n  + Download XZ compressed source tarball\n Python 3.8.0a1 - Feb. 3, 2019\n  + Download Gzipped source tarball\n  + Download XZ compressed source tarball\n Python 3.7.2rc1 - Dec. 11, 2018",
+          "published_date": "Thu, 09 Mar 2006 00:00:00 GMT",
+          "retrieved_at": "2026-11-05T16:34:53.972463+00:00",
+          "primary_source": true,
+          "future_dated": false
+        },
+        {
+          "id": "s3",
+          "url": "https://www.python.org/downloads",
+          "title": "Download Python",
+          "content": "217.   Python 3.0.0Dec. 3, 2008DownloadRelease notes\n218.   Python 2.7.18April 20, 2020DownloadRelease notes\n219.   Python 2.7.17Oct. 19, 2019DownloadRelease notes\n220.   Python 2.7.16March 4, 2019DownloadRelease notes\n221.   Python 2.7.15May 1, 2018DownloadRelease notes\n222.   Python 2.7.14Sept. 16, 2017DownloadRelease notes\n223.   Python 2.7.13Dec. 17, 2016DownloadRelease notes\n224.   Python 2.7.12June 25, 2016DownloadRelease notes\n225.   Python 2.7.11Dec. 5, 2015DownloadRelease notes [...] 1.   3.16 pre-releaseDownload2027-10-06 (planned)2032-10PEP 826\n2.   3.15 bugfixDownload2026-10-09 2031-10PEP 790\n3.   3.14 bugfixDownload2025-10-07 2030-10PEP 745\n4.   3.13 securityDownload2024-10-07 2029-10PEP 719\n5.   3.12 securityDownload2023-10-02 2028-10PEP 693\n6.   3.11 securityDownload2022-10-24 2027-10PEP 664\n7.   3.10 end-of-life, last release was 3.10.22Download2021-10-04 2026-10-01PEP 619\n\n## Looking for a specific release?\n\nPython releases by version number: [...] 172.   Python 3.6.0Dec. 23, 2016DownloadRelease notes\n173.   Python 3.5.10Sept. 5, 2020DownloadRelease notes\n174.   Python 3.5.9Nov. 2, 2019DownloadRelease notes\n175.   Python 3.5.8Oct. 29, 2019DownloadRelease notes\n176.   Python 3.5.7March 18, 2019DownloadRelease notes\n177.   Python 3.5.6Aug. 2, 2018DownloadRelease notes\n178.   Python 3.5.5Feb. 5, 2018DownloadRelease notes\n179.   Python 3.5.4Aug. 8, 2017DownloadRelease notes\n180.   Python 3.5.3Jan. 17, 2017DownloadRelease notes",
+          "published_date": "Tue, 16 Dec 2025 16:00:00 GMT",
+          "retrieved_at": "2026-11-05T16:34:53.972463+00:00",
+          "primary_source": true,
+          "future_dated": false
+        },
+        {
+          "id": "s4",
+          "url": "https://discuss.python.org/t/python-3-10-22-3-11-17-3-12-15-3-13-16-and-3-14-8-are-now-available/109296",
+          "title": "Python 3.10.22, 3.11.17, 3.12.15, 3.13.16 and 3.14.8 are now available! - Core Development - Discussions on Python.org",
+          "content": "# Python 3.10.22, 3.11.17, 3.12.15, 3.13.16 and 3.14.8 are now available!\n\nA full sweep of Python releases is here: Python 3.10.22, 3.11.17, 3.12.15, 3.13.16 and 3.14.8 are now available! One last lap around the Sun for Python 3.10, and security updates across all five series.\n\nGet them here: [...] Python 3.10.22 and 3.11.17 are source-only. There are no Windows or macOS installers: 3.10.11 and 3.11.9 were the last releases in their respective series to include binary installers. These two releases contain security fixes rather than new features. [...] Thank you to everyone who contributed patches, reviewed changes, tested releases, reported bugs, or helped us get a release out when the universe seemed determined to prevent it. It has been a privilege to be your release manager for this series.\n\nPython 3.11 still has another year of security fixes ahead of it, so you have not escaped me yet :slight_smile:\n\n:slight_smile:\n\n## We hope you enjoy the new releases!",
+          "published_date": "Thu, 01 Oct 2026 01:56:20 GMT",
+          "retrieved_at": "2026-11-05T16:34:53.972463+00:00",
+          "primary_source": true,
+          "future_dated": false
+        }
+      ],
+      "citation_ids": [
+        "s2",
+        "s3"
+      ],
+      "quotes": [
+        {
+          "source_id": "s2",
+          "text": "Latest Python 3 Release - Python 3.15.1"
+        },
+        {
+          "source_id": "s3",
+          "text": "3.15 bugfixDownload2026-10-09"
+        }
+      ],
+      "correction": null,
+      "source_policy": {
+        "entity": "Python",
+        "domains": [
+          "python.org"
+        ]
+      }
+    }
+  ],
+  "warnings": [],
+  "metrics": {
+    "search_calls": 1,
+    "llm_calls": 2,
+    "tavily_credits": 1,
+    "credit_usage_complete": true,
+    "latency_ms": 14809.89,
+    "model_tokens": {
+      "prompt_tokens": 3429,
+      "completion_tokens": 2199,
+      "total_tokens": 5628
+    }
+  },
+  "scope": "Up to 8 extracted claims; up to 5 time-sensitive claims searched. Coverage applies only to extracted time-sensitive claims.",
+  "input_citations": [],
+  "coverage": 1.0,
+  "freshness_score": 100,
+  "status": "supported",
+  "model": "gemini/gemini-3-flash-preview",
+  "run_note": "Captured live result from the earlier official-source run. Grounded-subject and truncated-answer guards were added afterwards; this sample does not validate that later revision."
+}
