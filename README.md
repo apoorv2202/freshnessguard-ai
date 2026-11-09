@@ -6,7 +6,7 @@
 
 FreshnessGuard AI verifies time-sensitive claims against external evidence without silently modifying the original AI-generated answer.
 
-Instead of assuming that a confident answer is correct, FreshnessGuard extracts individual claims, retrieves relevant evidence, validates citations and quotations, and generates an inspectable verification report.
+Instead of trusting a confident answer at face value, FreshnessGuard extracts individual claims, retrieves relevant evidence, validates citations and quotations, and produces an inspectable verification report.
 
 **Built for the Global AI Hackathon 2026 — Bifrost + Tavily**
 
@@ -16,114 +16,149 @@ Instead of assuming that a confident answer is correct, FreshnessGuard extracts 
 ![Go](https://img.shields.io/badge/Native_Plugin-Go-00ADD8?logo=go&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
+### 📊 Project Presentation
+
+**[View / Download the FreshnessGuard AI Pitch Deck (PPTX)](docs/FreshnessGuard-AI-Final-Pitch.pptx)**
+
+The presentation covers the problem, proposed solution, verification architecture, Bifrost and Tavily integration, demonstrations, and validation results.
+
+### Project Availability
+
+| Resource | Status |
+|---|---|
+| Source code | Available on GitHub |
+| Pitch presentation | PPTX in `docs/` |
+| Saved browser demonstration | Available to run locally |
+| Python verification service | Available to run locally |
+| Native Bifrost integration | Source and build instructions available |
+| Public hosted application | Not deployed yet |
+
+**Note:** FreshnessGuard AI is currently distributed as a source-code project with reproducible local demonstrations. A public hosted application is not yet available.
+
 ---
 
 ## 🌍 The Problem
 
-AI-generated answers can become outdated even when they sound completely confident.
+AI-generated answers can become outdated even when they sound confident.
 
-Consider questions such as:
+Examples include:
 
-- What is the latest stable Python release?
-- Which version of an API is currently supported?
-- Has a software framework deprecated a feature?
-- Is a particular model or service still available?
-- Has a product specification or official policy changed?
+- Recommending an old software release.
+- Referring to a deprecated API.
+- Describing a service that has changed.
+- Reporting obsolete product information.
+- Repeating an outdated technical recommendation.
 
-Language models may generate answers using information that no longer reflects the latest available evidence.
+Language models can produce plausible responses that no longer reflect the latest available evidence.
 
-**And simply attaching a citation does not guarantee correctness.**
-
-A citation may reference an obsolete document, an irrelevant page, or a passage that does not support the claim.
+Simply attaching citations does not guarantee accuracy. A source may be irrelevant, outdated, or insufficient to establish the claim.
 
 ### Our Approach
 
-FreshnessGuard adds a verification layer that:
+FreshnessGuard introduces an independent verification layer that:
 
-1. Preserves the original AI answer.
-2. Extracts time-sensitive claims.
-3. Searches for supporting or contradicting evidence.
-4. Prioritizes relevant and authoritative sources.
-5. Validates exact quotations and applicable release evidence.
-6. Produces transparent verdicts and citations.
+1. Preserves the original AI-generated answer.
+2. Extracts concrete time-sensitive claims.
+3. Retrieves relevant external evidence.
+4. Prioritizes appropriate authoritative sources.
+5. Validates quotations, citations, and supported release evidence.
+6. Produces explainable verification outcomes.
 7. Explicitly reports uncertainty when evidence is insufficient.
 
-**The goal is not to make every AI answer appear correct. It is to make the evidence and limitations visible.**
+**The goal is not to make every AI answer appear correct. It is to make the available evidence and its limitations visible.**
 
 ---
 
 ## 💡 What Is FreshnessGuard AI?
 
-FreshnessGuard AI is an opt-in verification system integrated with the Bifrost AI gateway.
+FreshnessGuard AI is an opt-in freshness verification system integrated with the Bifrost AI gateway.
 
-It combines three major components:
+It combines three main components:
 
 | Component | Responsibility |
 |---|---|
-| **Bifrost** | Routes model requests for claim extraction and evidence judgment; hosts the native verification plugin |
-| **Tavily** | Retrieves external search evidence relevant to individual claims |
-| **FreshnessGuard** | Orchestrates verification, validates quotations and citations, applies release checks, and generates reports |
+| **Bifrost** | Routes model requests and hosts the native verification plugin |
+| **Tavily** | Retrieves external evidence relevant to time-sensitive claims |
+| **FreshnessGuard** | Extracts claims, orchestrates verification, validates evidence, and generates reports |
 
-FreshnessGuard can operate through a native Bifrost integration or a standalone Python verification endpoint.
+The system can operate through a native Bifrost integration or a standalone Python verification endpoint.
 
-The native integration preserves the original response and attaches a separate freshness report.
+The original AI-generated answer remains unchanged, while verification information is presented separately.
 
 ---
 
-## ⚙️ How It Works
+## ⚙️ System Architecture
 
 ```text
-                    USER PROMPT
-                         |
-                         v
-                  AI MODEL RESPONSE
-                         |
-                         v
-              +----------------------+
-              | Original Answer      |
-              | Preserved Unchanged  |
-              +----------------------+
-                         |
-                         v
-              +----------------------+
-              | Claim Extraction     |
-              | Via Bifrost Model    |
-              +----------------------+
-                         |
-                         v
-              +----------------------+
-              | Time-Sensitive       |
-              | Claim Selection      |
-              +----------------------+
-                         |
-                         v
-              +----------------------+
-              | Tavily Search        |
-              | External Evidence    |
-              +----------------------+
-                         |
-                         v
-              +----------------------+
-              | Evidence Ranking     |
-              | Official Sources     |
-              +----------------------+
-                         |
-                         v
-              +----------------------+
-              | Model Assessment     |
-              | + Deterministic Gate |
-              +----------------------+
-                         |
-                         v
-              +----------------------+
-              | Freshness Report     |
-              | Verdicts + Citations |
-              +----------------------+
+                   USER PROMPT
+                        |
+                        v
+                 AI MODEL RESPONSE
+                        |
+                        v
+              +---------------------+
+              | Original Answer     |
+              | Preserved Unchanged |
+              +---------------------+
+                        |
+                        v
+              +---------------------+
+              | Claim Extraction    |
+              | Bifrost Model       |
+              +---------------------+
+                        |
+                        v
+              +---------------------+
+              | Time-Sensitive      |
+              | Claim Selection     |
+              +---------------------+
+                        |
+                        v
+              +---------------------+
+              | Tavily Search       |
+              | Evidence Retrieval  |
+              +---------------------+
+                        |
+                        v
+              +---------------------+
+              | Evidence Ranking    |
+              | Source Filtering    |
+              +---------------------+
+                        |
+                        v
+              +---------------------+
+              | Model Assessment    |
+              | Deterministic Checks|
+              +---------------------+
+                        |
+                        v
+              +---------------------+
+              | Freshness Report    |
+              | Verdicts + Sources  |
+              +---------------------+
 ```
 
-The original answer remains intact throughout the process.
+### Verification Pipeline
 
-The verifier's decisions are reported separately, allowing users to inspect the evidence instead of relying on an unexplained replacement answer.
+**Step 1 — Claim extraction**
+
+A Bifrost-routed model extracts concrete claims from the original answer. Extracted claims must correspond to exact text spans.
+
+**Step 2 — Time-sensitivity analysis**
+
+The verifier selects claims that may depend on changing information.
+
+**Step 3 — Evidence retrieval**
+
+Tavily searches for relevant external information using bounded search requests.
+
+**Step 4 — Evidence assessment**
+
+The verifier evaluates candidate evidence using model judgment and deterministic validation rules.
+
+**Step 5 — Report generation**
+
+The system produces claim-level verdicts, accepted evidence quotations, citations, coverage metrics, and diagnostics.
 
 ---
 
@@ -131,157 +166,135 @@ The verifier's decisions are reported separately, allowing users to inspect the 
 
 ### 1. Original Answer Preservation
 
-FreshnessGuard does not silently rewrite the generated response.
+FreshnessGuard never silently rewrites the original response.
 
-It attaches verification metadata and a separate evidence report, keeping the original answer available for inspection.
+Verification information is attached separately so users can distinguish the model's answer from the verifier's findings.
 
 ### 2. Atomic Claim Extraction
 
-A Bifrost-routed model extracts concrete, time-sensitive claims from the original answer.
+The verifier extracts concrete claims grounded in exact substrings of the original answer.
 
-Extracted claims must correspond to exact spans of the input answer. Unsupported paraphrases are rejected.
+Unsupported paraphrases and malformed extraction outputs are rejected.
 
-### 3. Tavily-Powered Evidence Retrieval
+### 3. Tavily-Powered Search
 
-FreshnessGuard generates targeted search queries for selected claims.
+Time-sensitive claims are checked using targeted external searches.
 
-Tavily supplies external search candidates, which are ranked and filtered before evidence assessment.
+Search results are ranked and filtered before evidence assessment.
 
-For supported release claims, official sources receive additional scrutiny.
+### 4. Deterministic Evidence Validation
 
-### 4. Deterministic Citation Validation
+The verifier checks:
 
-The verifier checks whether:
+- Whether a citation identifier exists in the retrieved evidence.
+- Whether a proposed quotation occurs in the actual source content.
+- Whether required release dates or version details are present.
+- Whether applicable official-source policies are satisfied.
+- Whether supported deterministic release checks pass.
 
-- A cited source identifier exists in the retrieved evidence.
-- A proposed quotation occurs in the actual source content.
-- Required dates or version information are present.
-- Applicable official-source requirements are satisfied.
-- Supported release-version checks pass.
+Quotation matching establishes provenance, not independent factual truth.
 
-Exact quotation matching establishes that text came from the selected evidence. It does not independently prove semantic correctness.
-
-### 5. Evidence-Backed Verdicts
-
-Each checked claim can receive an explicit result:
+### 5. Explainable Verification Outcomes
 
 | Verdict | Meaning |
 |---|---|
-| ✅ `supported` | Accepted evidence supports the checked claim |
-| ⚠️ `outdated` | Accepted evidence establishes that the claim is stale |
-| ❔ `uncertain` | The verifier cannot establish a decisive result |
-| ➖ `not_checked` | The claim did not receive a freshness check |
-| ⛔ `unavailable` | A verification dependency or step failed |
+| `supported` | Accepted evidence supports the checked claim |
+| `outdated` | Accepted evidence establishes that the claim is stale |
+| `uncertain` | Evidence is insufficient for a decisive result |
+| `not_checked` | The claim did not receive a freshness check |
+| `unavailable` | A verification dependency or step failed |
 
-### 6. Explainable Verification Reports
+### 6. Transparent Reports
 
-Reports can include:
+Verification reports can include:
 
-- Extracted claims
-- Individual verification outcomes
-- Evidence quotations
-- Citation URLs
+- Extracted claims and individual verdicts
+- Accepted quotations and citation URLs
 - Proposed corrections for outdated claims
-- Evidence coverage
-- Freshness score
-- Search usage
-- Failure diagnostics
+- Freshness score and evidence coverage
+- Search usage and failure diagnostics
 
-### 7. Explicit Failure Handling
+### 7. Explicit Abstention
 
-FreshnessGuard handles insufficient evidence, invalid citations, malformed model responses, provider failures, and exhausted request budgets.
+Insufficient evidence, invalid citations, conflicting sources, malformed model responses, or unavailable dependencies can produce an uncertain or unavailable result rather than an unsupported conclusion.
 
-When a reliable conclusion cannot be established, the verifier can abstain instead of inventing certainty.
+### 8. Saved Demonstration Mode
 
-### 8. Saved Demo Mode
+The frontend includes saved scenarios that can be explored without external API credentials.
 
-A credential-free demonstration is available through the frontend.
-
-Judges can explore representative saved verification reports without needing live model-provider access.
-
-Saved scenarios are explicitly distinguished from live verification.
+These scenarios are explicitly identified as saved or synthetic demonstrations.
 
 ---
 
 ## 🧠 Bifrost Integration
 
-FreshnessGuard includes a native Go HTTP transport plugin for the Bifrost AI gateway.
+FreshnessGuard includes a native Go HTTP transport plugin using Bifrost's shared-object plugin loading mechanism.
 
-The integration supports opt-in verification of compatible non-streaming text chat completions.
-
-A request can enable verification using:
+Compatible non-streaming chat completions can opt into verification with:
 
 ```http
 x-freshnessguard: verify
 ```
 
-The native plugin integrates with Bifrost's request and response hooks.
+The native integration supports:
 
-It preserves the original model-generated answer and attaches verification results when available.
-
-### Native Integration Capabilities
-
-- Opt-in verification
 - Request and response hooks
-- Non-streaming chat support
-- Recursion prevention for internal model requests
+- Opt-in verification
+- Original answer preservation
+- Internal-request recursion prevention
 - Bounded verification deadlines
-- Explicit verification failure reporting
-- Preservation of original model output
+- Explicit reporting of verification failures
+- Compatible non-streaming text chat responses
 
-The integration is advisory, not an authorization or enforcement boundary.
+The integration is advisory rather than an authorization or enforcement boundary.
 
-Streaming verification is not supported by the current native plugin.
+Streaming verification is not supported in the current native plugin.
 
 ---
 
 ## 🔎 Tavily Integration
 
-Tavily provides the external search layer used during claim verification.
+Tavily provides the external evidence retrieval layer.
 
-FreshnessGuard uses bounded search queries to retrieve evidence candidates relevant to the extracted claims.
+FreshnessGuard uses targeted queries to retrieve search candidates for individual claims.
 
-The verifier then evaluates source relevance, citation validity, quotation integrity, and applicable release-version requirements.
+Evidence handling includes:
 
-### Evidence Handling
+- Claim-specific search
+- Source ranking
+- Official-source preference for supported release topics
+- Exact quotation validation
+- Limited official-page retrieval when needed
+- Explicit abstention when decisive evidence cannot be established
 
-FreshnessGuard can:
-
-- Search for evidence related to individual claims.
-- Prefer official documentation for supported release topics.
-- Filter unsuitable sources.
-- Check exact evidence quotations.
-- Fetch a limited number of allowlisted official pages when necessary.
-- Reject unsupported decisive verdicts.
-
-The system does not treat every retrieved webpage as authoritative.
+A retrieved search result is not automatically treated as proof.
 
 ---
 
 ## 🖥️ Frontend Workbench
 
-The React-based frontend provides four primary pages:
+The React frontend includes four pages:
 
 | Page | Purpose |
 |---|---|
-| **Home** | Introduces FreshnessGuard and its verification approach |
+| **Home** | Introduces the verification system |
 | **Verify** | Provides the verification interface |
-| **Examples** | Displays saved demonstration scenarios |
-| **Integrations** | Explains the system's integration architecture |
+| **Examples** | Shows saved demonstration scenarios |
+| **Integrations** | Explains Bifrost and Tavily integration |
 
-The frontend supports both saved demonstration workflows and an explicitly enabled local live-verification workflow.
+The frontend supports a credential-free saved-demo workflow and an explicitly enabled local live-verification workflow.
 
-Saved demos are available without external API credentials.
+**The frontend has not yet been publicly deployed.**
 
 ---
 
 ## 🧪 Testing and Validation
 
-FreshnessGuard underwent local regression testing, scripted benchmark evaluation, native plugin checks, and Bifrost gateway smoke testing.
+FreshnessGuard was evaluated using local regression tests, scripted benchmarks, native plugin checks, and gateway integration smoke tests.
 
-### Final Local Release Validation
+### Final Local Release Results
 
-| Test category | Result |
+| Test category | Reported result |
 |---|---|
 | Python regression tests | **173 passed** |
 | Frontend tests | **14 passed** |
@@ -293,34 +306,17 @@ FreshnessGuard underwent local regression testing, scripted benchmark evaluation
 | Native Go race tests | **Passed** |
 | Native plugin loader smoke | **Passed** |
 
-These results were reported for the final local release validation.
+These results were reported for the final local release.
 
-### What These Results Demonstrate
+The scripted evaluations exercise expected behavior using controlled evidence and provider responses.
 
-The tests exercise:
+**These results do not establish general live-world fact-checking accuracy.**
 
-- Claim extraction and verification logic
-- Evidence and citation validation
-- Deterministic release checks
-- Error handling and abstention behavior
-- Frontend behavior
-- Native plugin loading
-- Bifrost gateway integration
-- Scripted provider and evidence scenarios
+### Gateway Smoke Scenarios
 
-**Important:** These are local tests and scripted evaluations. They are not measurements of general live fact-checking accuracy.
+**Qualifying official release evidence**
 
-The full gateway smoke uses the actual Bifrost gateway, native Go plugin, and Python verifier with controlled local provider responses and evidence.
-
-### Gateway Smoke Verification
-
-Two important scenarios demonstrate the verifier's evidence policy.
-
-**Scenario A — Qualifying release evidence**
-
-A dated official Python release fixture satisfied the required checks.
-
-Result:
+A dated official Python release fixture satisfied the verification requirements.
 
 ```text
 Verdict: OUTDATED
@@ -328,25 +324,21 @@ Citation: Accepted
 Evidence: Qualifying dated release passage
 ```
 
-**Scenario B — Nonqualifying evidence**
+**Nonqualifying release evidence**
 
-A fictional ExampleSDK release claim used evidence from `example.com`, which did not satisfy the official-source requirement.
-
-Result:
+A fictional ExampleSDK release claim relied on evidence from `example.com`, which did not satisfy the required official-source policy.
 
 ```text
 Verdict: UNCERTAIN
 Citation: Not accepted
-Evidence: Insufficient for a decisive release verdict
+Evidence: Insufficient for a decisive verdict
 ```
 
-The second scenario is intentional: FreshnessGuard should not declare a claim outdated merely because an unqualified source says so.
+This demonstrates the intended behavior: an unqualified source should not automatically produce an outdated verdict.
 
 ---
 
-## 📊 Freshness Score and Coverage
-
-FreshnessGuard separates the quality of accepted evidence from the proportion of claims successfully verified.
+## 📊 Freshness Score and Evidence Coverage
 
 ### Freshness Score
 
@@ -355,9 +347,9 @@ Freshness Score =
 100 × Supported / (Supported + Outdated)
 ```
 
-Only time-sensitive claims with accepted decisive evidence contribute to this score.
+Only time-sensitive claims with accepted decisive evidence contribute.
 
-When there are no such verdicts, the score is not assessed.
+If no evidence-backed decisive verdicts exist, the score is not assessed.
 
 ### Evidence Coverage
 
@@ -368,30 +360,26 @@ Evidence-backed time-sensitive claims
 All extracted time-sensitive claims
 ```
 
-Uncertain claims reduce coverage.
+Uncertain claims lower coverage.
 
-Historical or otherwise unverified `not_checked` claims are excluded from the time-sensitive denominator.
+Historical and other `not_checked` claims are outside the time-sensitive denominator.
 
-A high freshness score with low coverage must not be interpreted as comprehensive verification.
+A high freshness score with low evidence coverage does not mean the entire answer has been verified.
 
 ---
 
-## 🎬 Demonstration
+## 🎬 Demonstration and Evidence Provenance
 
-### Example: An Outdated Software-Release Claim
-
-Consider the statement:
+### Example Claim
 
 > The latest stable Python release series is 3.11.
 
-FreshnessGuard attempts to verify the release claim using external evidence.
-
-### Captured Live Result — November 6, 2026
+### Captured Live Verification — November 6, 2026
 
 ```text
 Claim: The latest stable Python release series is 3.11.
 
-Result: UNCERTAIN
+Verdict: UNCERTAIN
 
 Reason:
 The proposed evidence quotation omitted the
@@ -400,37 +388,47 @@ release date required by the verifier.
 Accepted citations: None
 ```
 
-The verifier abstained because the selected quotation did not satisfy its release-evidence requirements.
+The verifier abstained because the quotation did not satisfy the required release-evidence checks.
 
 ### Separate Offline Corrected-Evidence Replay
-
-The saved evidence was replayed with a complete dated passage.
 
 ```text
 Claim: The latest stable Python release series is 3.11.
 
-Result: OUTDATED
+Verdict: OUTDATED
 
 Evidence:
-Complete dated release passage
+A complete dated release passage.
 
 Mode:
-Offline corrected-evidence replay
+Offline corrected-evidence replay.
 ```
 
-This replay used no new model, search, or page-fetch calls.
+The offline replay used saved evidence without new model, search, or page-retrieval calls.
 
-It is not a second live verification.
+It is not another live verification.
 
-The repository also documents an earlier live observation and distinguishes it from the later captured result and offline evaluation.
+An earlier live observation is documented separately in the repository's demonstration materials.
+
+### Recommended Demonstration
+
+For a repeatable walkthrough, use the frontend's **Saved Demo** experience.
+
+The saved examples demonstrate successful evidence handling, uncertainty, and simulated upstream failures.
+
+They should not be represented as fresh live verification.
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Run FreshnessGuard AI Locally
+
+FreshnessGuard AI is currently available as a source-code project with reproducible local demonstrations.
+
+**A public hosted demo is not yet available.**
 
 ### Prerequisites
 
-For the saved browser demo:
+For the browser demo:
 
 - Node.js 22 or newer
 - npm
@@ -439,24 +437,14 @@ For the Python verifier:
 
 - Python 3.11 or newer
 
-For native gateway integration:
-
-- Linux or WSL Ubuntu
-- A compatible Go toolchain
-- C build tools
-- The pinned Bifrost upstream source
-- Matching compiler and build configuration for the gateway and plugin
-
-Live verification additionally requires configured model-provider access through Bifrost and a Tavily API key.
-
-### 1. Clone the Repository
+### Step 1 — Clone the Repository
 
 ```bash
 git clone https://github.com/apoorv2202/freshnessguard-ai.git
 cd freshnessguard-ai
 ```
 
-### 2. Run the Saved Browser Demo
+### Step 2 — Run the Saved Browser Demo
 
 On Windows PowerShell:
 
@@ -468,13 +456,13 @@ Remove-Item Env:FRESHNESSGUARD_ENABLE_LIVE -ErrorAction SilentlyContinue
 npm.cmd run dev --prefix frontend
 ```
 
-Open the local URL displayed by Vite.
+Open the local URL shown by Vite.
 
 Navigate to **Examples** and select a saved scenario.
 
-This workflow does not require Gemini, Tavily, Bifrost, or the Python verifier.
+This does not require Tavily credentials, Gemini credentials, Bifrost, or the Python verifier.
 
-### 3. Run the Offline Python Demo
+### Step 3 — Run the Offline Python Demo
 
 From the repository root:
 
@@ -484,31 +472,29 @@ python -m scripts.render_demo
 Start-Process ./demo/report.html
 ```
 
-The generated report provides a portable demonstration of the verification report format.
+The generated report is a portable demonstration of the verification report format.
 
-The demonstration uses synthetic inputs and scripted evidence.
+Its model decisions and search evidence are scripted.
 
-### 4. Run the Python Tests
+### Step 4 — Run Regression Tests
 
 ```powershell
 python -m unittest discover -s tests -v
 ```
 
-### 5. Run the Offline Benchmark
+### Step 5 — Run the Offline Benchmark
 
 ```powershell
 python -B -m benchmarks.final_offline
 ```
 
-The offline benchmark evaluates expected behavior on fixed fixtures, not live-world accuracy.
+These commands evaluate the local implementation and fixed test scenarios, not live fact-checking accuracy.
 
 ---
 
-## 🛠️ Standalone Verification Service
+## 🛠️ Standalone Python Verification Service
 
-FreshnessGuard also provides a standalone Python verification endpoint.
-
-Start the local service with synthetic evidence:
+Start the verifier using synthetic evidence:
 
 ```powershell
 python -m freshnessguard.cli serve --fixture
@@ -528,59 +514,47 @@ Invoke-RestMethod `
     -Body $body
 ```
 
-This allows local inspection of verification responses without using live providers.
+The endpoint allows local inspection of verification results without live external providers.
 
 ---
 
 ## 🔐 Environment Configuration
 
-Copy the example environment file before configuring live verification:
+For live verification, create a local environment file:
 
 ```powershell
 Copy-Item .env.example .env
 ```
 
-Populate the local `.env` with the required settings.
+Configure the required values:
 
 | Variable | Purpose |
 |---|---|
-| `BIFROST_URL` | Bifrost's OpenAI-compatible API base URL |
+| `BIFROST_URL` | Bifrost OpenAI-compatible base URL |
 | `BIFROST_MODEL` | Configured provider/model identifier |
 | `BIFROST_VIRTUAL_KEY` | Gateway virtual key, if required |
 | `TAVILY_API_KEY` | Tavily API credential |
-| `FRESHNESSGUARD_TOKEN` | Shared local verifier authentication token |
+| `FRESHNESSGUARD_TOKEN` | Local verifier authentication token |
 
-The Gemini provider credential belongs in the Bifrost provider configuration.
+Configure the Gemini provider credential in Bifrost itself.
 
-For local frontend live verification:
+The verifier token should contain at least 24 characters and must match between the verifier and frontend's server-side process.
 
-```powershell
-$env:FRESHNESSGUARD_ENABLE_LIVE = '1'
-```
-
-The frontend's server-side process must also receive the same verifier token.
-
-**Never commit `.env`, API credentials, authentication tokens, or provider secrets.**
-
-Do not expose credentials through `VITE_*` environment variables, because those can be included in client-side builds.
+**Never commit `.env` or expose credentials in client-side `VITE_*` variables.**
 
 ---
 
 ## 🌐 Local Live Verification
 
-Live verification requires three local components:
+Live verification requires three locally running components.
 
-1. Bifrost gateway
-2. Python verifier
-3. Vite frontend
+### Terminal 1 — Bifrost Gateway
 
-### Terminal 1 — Bifrost
+Start a configured Bifrost gateway on loopback port `8080`.
 
-Start your configured Bifrost gateway on loopback port `8080`.
+The gateway must have a working model-provider configuration.
 
-Follow the upstream Bifrost installation instructions for your operating system and provider configuration.
-
-The repository's documented Windows workflow also supports an existing cached Bifrost binary.
+Follow the upstream Bifrost setup instructions for your platform.
 
 ### Terminal 2 — Python Verifier
 
@@ -588,7 +562,9 @@ The repository's documented Windows workflow also supports an existing cached Bi
 python -m freshnessguard.cli serve --env-file .env --port 8765
 ```
 
-### Terminal 3 — Frontend
+### Terminal 3 — Vite Frontend
+
+From the repository root:
 
 ```powershell
 Set-Location frontend
@@ -603,30 +579,21 @@ $env:FRESHNESSGUARD_ENABLE_LIVE = '1'
 npm.cmd run dev
 ```
 
-Open the Verify page and select the live-verification workflow.
+Open the local Verify page.
 
-### Before Running a Live Check
+Before making a live request, confirm the configured model supports structured JSON output and that Tavily and model-provider quotas are available.
 
-Confirm that:
+Health endpoints confirm local process availability, not live-provider readiness.
 
-- Bifrost is running.
-- The Python verifier is running.
-- The configured model supports structured JSON output.
-- Tavily credentials are valid.
-- The provider has available quota.
-- The verifier token matches between services.
-
-Health checks confirm process availability, not provider readiness.
-
-Live verification can incur model-provider and Tavily usage charges.
+Live verification may consume model-provider and Tavily credits.
 
 ---
 
 ## 🐧 Native Bifrost Plugin — WSL Ubuntu
 
-FreshnessGuard's native integration uses Bifrost's supported shared-object plugin loading mechanism.
+FreshnessGuard's native Go integration uses the existing Bifrost shared-object plugin loader.
 
-The project was developed against the inspected upstream Bifrost source revision:
+The inspected upstream source revision was:
 
 ```text
 afdce01b50a78199f59e38117cd4d5952d038b07
@@ -634,17 +601,15 @@ afdce01b50a78199f59e38117cd4d5952d038b07
 
 The inspected upstream modules declared Go `1.27.3`.
 
-Native plugin builds require a compatible toolchain and matching build conditions.
+A compatible Go toolchain, C build tools, CGO, and matching gateway/plugin build settings are required.
 
 ### Build the Plugin
-
-From the project directory inside Ubuntu:
 
 ```bash
 bash scripts/build-plugin.sh
 ```
 
-### Run the Native Loader Smoke
+### Native Loader Smoke
 
 ```bash
 python3 -m scripts.native_smoke --upstream "$PWD/work/bifrost"
@@ -656,27 +621,27 @@ python3 -m scripts.native_smoke --upstream "$PWD/work/bifrost"
 bash scripts/build-gateway.sh
 ```
 
-### Run the Gateway Smoke
+### Gateway Smoke
 
 ```bash
 python3 -m scripts.gateway_smoke
 ```
 
-The gateway smoke uses controlled local evidence and provider responses.
+The gateway smoke exercises the actual Bifrost HTTP gateway, native plugin, and verifier with controlled local provider responses and evidence.
 
-It exercises the real gateway and native plugin integration without requiring paid live-provider calls.
+It does not require live paid-provider calls.
 
-### Native Integration Notes
+### Deployment and Integration Considerations
 
-- Gateway and plugin must use compatible Go and CGO build configurations.
-- The plugin must be loaded by a compatible dynamically linked gateway.
-- The native plugin should not be copied into an arbitrary static release binary.
-- Plugin configuration must be merged into the gateway's configuration.
-- The verifier and gateway must have compatible network connectivity and shared authentication configuration.
+- Build the plugin and gateway using compatible upstream source and toolchain settings.
+- Use a dynamically linked gateway compatible with the shared-object loader.
+- Merge `integrations/bifrost/config.fragment.json` into the gateway configuration.
+- Set the plugin path to the absolute Linux `.so` location.
+- Ensure the verifier and gateway can communicate over their configured network.
+- Configure the same verifier authentication token for the native plugin and Python service.
+- Do not assume Windows loopback services are reachable from WSL.
 
-When using WSL, do not assume a Windows loopback service is automatically reachable from the Ubuntu environment.
-
-See the repository's integration documentation and build scripts for complete reproduction details.
+The normal static Bifrost release binary is not interchangeable with the required dynamically linked build.
 
 ---
 
@@ -689,29 +654,26 @@ freshnessguard-ai/
 |   `-- workflows/
 |
 |-- benchmarks/
-|   |-- final_offline.py
-|   `-- gateway-smoke.json
+|   `-- Scripted evaluations and benchmark utilities
 |
 |-- demo/
 |   |-- report.html
 |   `-- report.json
 |
 |-- docs/
+|   `-- FreshnessGuard-AI-Final-Pitch.pptx
 |
 |-- freshnessguard/
 |   `-- Core Python verification system
 |
 |-- frontend/
-|   `-- React verification workbench
+|   `-- React browser workbench
 |
 |-- integrations/
-|   `-- Bifrost native integration
+|   `-- Native Bifrost plugin
 |
 |-- scripts/
-|   |-- build-plugin.sh
-|   |-- build-gateway.sh
-|   |-- gateway_smoke.py
-|   `-- Native and demo utilities
+|   `-- Build, smoke-test, and demo utilities
 |
 |-- tests/
 |   `-- Python regression tests
@@ -723,133 +685,121 @@ freshnessguard-ai/
 `-- README.md
 ```
 
-Some generated benchmark outputs and local build artifacts may be absent from a fresh checkout until the relevant scripts are run.
+The presentation entry assumes the PPTX has been uploaded to the documented location.
+
+Some benchmark outputs and build artifacts are generated locally rather than committed.
 
 ---
 
 ## 🛡️ Reliability and Safety Design
 
-FreshnessGuard is designed to make verification failures explicit.
+### Deterministic Evidence Gates
 
-### Deterministic Safeguards
+Decisive verdicts require qualifying citations and evidence quotations.
 
-The verifier checks evidence identifiers and exact quotations before accepting decisive results.
+Supported release topics also use deterministic source and version checks.
 
-For supported release claims, it also applies official-source and version-evidence rules.
+### Resource Limits
 
-### Bounded Resource Usage
+The implementation bounds:
 
-The current implementation includes limits on:
-
-- Input size
-- Extracted claims
-- Time-sensitive claims selected for search
-- Tavily search requests
-- Model requests
-- Retrieved source content
-- Official-page fetches
-- Concurrent verification operations
+- Input answer length
+- Number of extracted claims
+- Claims selected for search
+- Search and model request budgets
+- Source content size
+- Official-page retrieval
+- Concurrent verification requests
 
 ### Rate-Limit Handling
 
-Upstream HTTP 429 responses can stop additional paid checks for the affected answer.
+Provider HTTP 429 responses can stop additional paid verification checks.
 
-The report exposes the failure rather than manufacturing a successful verification.
-
-The frontend can offer saved demonstrations when live verification is unavailable.
+The resulting report makes the failure explicit.
 
 ### Recursion Prevention
 
-Internal model requests do not opt into FreshnessGuard verification again.
+Internal verifier model calls do not trigger the native verification workflow again.
 
-This prevents the verifier from recursively verifying its own model calls.
+### Failure Transparency
 
-### Original Answer Preservation
+Verification failures preserve the original answer and report an unavailable state where appropriate.
 
-Verification failures do not silently replace the original AI-generated response.
-
-Unavailable verification is explicitly reported.
+The completion of the reporting operation does not mean every claim has been verified.
 
 ---
 
-## ⚠️ Current Limitations
+## ⚠️ Known Limitations
 
-FreshnessGuard AI is a prototype and should not be treated as a universal fact-checking guarantee.
+FreshnessGuard AI is a prototype, not a universal fact-checking guarantee.
 
-### Verification Scope
+- Only compatible non-streaming text chat completions are supported by the native plugin.
+- Some claims are not extracted or checked.
+- General semantic judgments remain model-assisted.
+- Exact quotation matching establishes provenance, not factual truth.
+- Retrieval time does not guarantee source freshness.
+- Unsupported release topics may produce uncertain outcomes.
+- Provider rate limits, latency, and network failures can interrupt verification.
+- Multi-claim requests can exceed browser adapter deadlines.
+- Gateway timeouts do not necessarily cancel ongoing verifier work.
+- The local development service is not a production-grade public API.
+- No complete multi-tenant authentication and isolation system is included.
+- A public deployment has not yet been completed.
 
-- The native integration currently supports compatible non-streaming text chat completions.
-- Not every claim is extracted or checked.
-- Release-specific deterministic checks cover a defined set of technologies and source policies.
-- General semantic support still involves model judgment.
-- Exact quotation matching proves textual provenance, not factual truth.
-- Retrieval time does not establish that the source itself is current.
-- An uncertain or unavailable result is not evidence that the original claim is correct.
+### Privacy Considerations
 
-### Operational Limits
-
-- The documented development service is loopback-oriented.
-- No public production deployment is established by the local test results.
-- No complete multi-tenant authentication and isolation product is included.
-- Verification can be affected by provider quotas, latency, and network failures.
-- Some verification requests can exceed frontend time limits.
-- A gateway timeout does not necessarily cancel work already executing in the Python service.
-
-### Privacy and Security
-
-Claims and evidence excerpts may be sent to the configured model provider.
+Answer claims and source excerpts may be sent to the configured model provider.
 
 Search queries are sent to Tavily.
 
-Do not submit sensitive production data without an appropriate data-handling policy.
+Do not submit sensitive production answers without an approved data-handling policy.
 
-Retrieved source content is untrusted input. Deterministic checks reduce some risks but do not eliminate model-level prompt injection or factual errors.
+Retrieved source content is treated as untrusted data, but model-level prompt injection remains a risk.
 
 ---
 
 ## 📈 Future Improvements
 
-Potential future work includes:
+Potential future directions include:
 
-- Expanded official-source verification policies
-- Broader claim categories
-- Additional model-provider configurations
-- More efficient evidence retrieval
-- Improved report visualization
-- Stronger production deployment controls
-- Additional adversarial evaluations
-- Broader live evaluation with documented datasets
-- Better monitoring of verification coverage and failures
+- Broader official-source policies
+- Additional claim categories
+- More model-provider configurations
+- Improved evidence retrieval efficiency
+- Expanded live evaluation datasets
+- Better verification analytics
+- Production-ready authentication and isolation
+- Public frontend hosting
+- Secure cloud deployment of the verifier and Bifrost gateway
 
-These are possible future directions, not claims about features already implemented.
+These are future possibilities, not currently deployed capabilities.
 
 ---
 
-## 📚 Technical Documentation
+## 📚 Documentation
 
-For deeper technical information, explore:
+Additional technical materials are available in:
 
-- `docs/` — architecture, integration notes, limitations, and submission material
-- `benchmarks/` — benchmark methodology and scripted evaluations
-- `integrations/` — native Bifrost plugin implementation
-- `scripts/` — build, demonstration, and gateway validation tools
-- `tests/` — Python regression tests
-- `frontend/` — browser workbench
+- `docs/` — architecture, integration notes, and project presentation
+- `benchmarks/` — scripted evaluations and benchmark methodology
+- `integrations/` — Bifrost plugin implementation
+- `scripts/` — build and verification utilities
+- `tests/` — regression tests
+- `frontend/` — React workbench
 
-The source code and test fixtures are intended to support inspection and local reproduction.
+The project includes source code and test fixtures for inspection and local reproduction.
 
 ---
 
 ## 👨‍💻 Developer
 
-**Apoorv Anand**
-
+**Apoorv Anand**  
 Computer Science and Engineering  
 RV College of Engineering, Bengaluru
 
 GitHub: [@apoorv2202](https://github.com/apoorv2202)
 
-Project Repository: [FreshnessGuard AI](https://github.com/apoorv2202/freshnessguard-ai)
+Project: [FreshnessGuard AI](https://github.com/apoorv2202/freshnessguard-ai)
 
 Developed as a solo hackathon project.
 
