@@ -16,7 +16,11 @@ If port 8765 is occupied by your existing verifier, stop it with Ctrl+C in its t
 
 ## HTTP 429 / 503
 
-The observed Gemini quota stopped the benchmark even with pacing. Stop the run and check provider quota/reset information locally. No automatic retries or fallback to failing models are implemented. A process exit with partial results is not a completed benchmark: inspect `case_count`, warnings, missing claims and evaluation rows. Rerun only after quota is available. A daily quota may not recover after a short wait.
+Recent extraction and judgment 429s were Gemini provider responses. The local gateway records showed `RESOURCE_EXHAUSTED` for the free-tier `generate_content_free_tier_requests` metric and a daily limit of 20 for the configured model. The virtual key had no linked key, team, customer, or provider rate limit. This is an observation about that configuration, and other projects or tiers may differ.
+
+Check the configured Google project's quota and reset status. Wait for available quota or have the account owner arrange approved capacity for that project. A short provider retry hint does not establish that daily quota has reset. FreshnessGuard surfaces a bounded numeric delay only when it receives a usable HTTP `Retry-After` header. The inspected gateway logs do not retain those headers.
+
+FreshnessGuard does not retry automatically. A 429 or judgment timeout leaves later time-sensitive claims unverified and stops further paid checks for that answer. The Verify page offers the saved replay while keeping the original answer in its tab. For a partial benchmark, inspect `case_count`, warnings, missing claims, and evaluation rows before interpreting the results.
 
 ## Incomplete JSON or truncated generation
 

@@ -5,7 +5,7 @@ export type ReportStatus = "supported" | "review_required" | "upstream_error" |
   "unavailable" | "no_claims_extracted" | "no_time_sensitive_claims" | "incomplete";
 export interface Diagnostic {
   stage: string; category: "upstream_error" | "unavailable";
-  code: string; http_status?: number | null; retryable?: boolean;
+  code: string; http_status?: number | null; retryable?: boolean; retry_after_seconds?: number;
 }
 export interface EvidenceQuote { source_id: string; text: string }
 export interface Source {
@@ -47,7 +47,9 @@ export interface Claim {
   source_retrieval?: {
     status: "skipped" | "attempted" | "ok" | "failed"; reason: string;
     url?: string; source_id?: string; parent_source_id?: string; error?: Diagnostic;
+    reused?: boolean; obtained_at?: string;
   };
+  retrieval?: { search_reused?: boolean; search_obtained_at?: string };
 }
 export interface Metrics {
   search_calls: number; llm_calls: number; tavily_credits: number;

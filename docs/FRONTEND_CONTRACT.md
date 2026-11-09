@@ -47,12 +47,13 @@ Keep local development same-origin via the frontend server/proxy; do not add wil
 
 ## Field semantics
 
-- `coverage` is 0..1; render `coverage * 100` as a percentage. It applies to extracted time-sensitive claims, not proof that extraction found every claim.
-- `freshness_score` is 0..100 over decisive claims. `null` renders “Not assessed”, never 0 or 100. Zero coverage must not look like a fresh answer.
+- `coverage` is 0..1; render `coverage * 100` as a percentage. It divides evidence-backed supported and outdated verdicts by all extracted time-sensitive claims. Uncertain lowers coverage. Historical and other `not_checked` claims are excluded.
+- `freshness_score` is 0..100. It divides evidence-backed supported verdicts by all evidence-backed supported and outdated verdicts. `null` renders “Not assessed” when the denominator is zero.
 - `supported` means the entire claim passed available validation. `outdated` requires accepted evidence. `uncertain` means abstention; `not_checked` means no time-sensitive check was performed.
 - `mode` and fixture provenance are separate: a fixture copied from a live report still needs “Saved live — captured at …”, not a live spinner/success badge. An offline repaired replay is not a successful live benchmark.
 - `quotes[].text` is an exact substring of that source's included `content` (whitespace-only model transcription is resolved back to the original span). Selected quote windows additionally provide same-source offsets and retain the original model quote. Offsets count Unicode code points, not bytes or JavaScript UTF-16 units; use the quote text directly or `Array.from(content).slice(start, end).join("")` for highlighting. Escape all source/answer strings as text; never use raw HTML insertion. Validate source link scheme/credentials before rendering and use safe new-tab attributes. No automatic source-page requests from the browser.
 - Retrieval and publication dates differ from release/effective dates. Show the date kind. Preserve citation IDs; do not use array order as the citation identifier.
+- With request-local evidence reuse enabled, optional `retrieval.search_reused` and `source_retrieval.reused` indicate that an identical fetch was already made for another claim in this answer. The original fetch time is carried in `retrieved_at`. Each claim still gets its own evidence selection and assessment.
 - Timings and usage may be absent in historical/incomplete reports. Render missing values as unavailable; stage medians do not sum exactly to total. Token totals aggregate extraction and judgment; do not label them generated-output tokens.
 - An envelope-level native failure has unavailable status, empty reports, a fixed explanation and structured `error` with safe stage/category/code. Preserve the original generated answer while clearly labeling it unverified.
 

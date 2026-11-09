@@ -7,7 +7,7 @@ import type { LayoutContext } from '../components/Layout'
 import type { FreshieMood } from '../components/Freshie'
 import { VerificationResults } from '../components/VerificationResults'
 import { ANSWER_LIMIT, loadSavedReport, savedDemos } from '../lib/savedReports'
-import { verifyLiveAnswer } from '../lib/liveVerification'
+import { verifyLiveAnswer, watchVerificationElapsed } from '../lib/liveVerification'
 
 const lines = [
   "Teaching AI that confidence isn't a citation.",
@@ -30,18 +30,22 @@ const scenarioName = (demo: FixtureDescriptor) => scenarioNames[demo.id] ?? demo
 
 function Scanner({ live = false }: { live?: boolean }) {
   const [line, setLine] = useState(0)
+  const [elapsed, setElapsed] = useState(0)
   useEffect(() => {
-    if (live) return
+    if (live) return watchVerificationElapsed(setElapsed)
     const interval = window.setInterval(() => setLine((i) => (i + 1) % lines.length), 3500)
     return () => window.clearInterval(interval)
   }, [live])
   return (
-    <div className="glass flex items-center gap-5 rounded-3xl px-5 py-7 sm:px-8" role="status">
+    <div className="glass flex items-center gap-5 rounded-3xl px-5 py-7 sm:px-8">
       <div className="verify-radar shrink-0" aria-hidden="true"><Radar size={28} /></div>
       <div>
-        <p className="font-semibold text-fg">{live ? 'Checking your answer' : 'Opening the saved report'}</p>
-        <p className="mt-1 text-sm text-muted">{live ? 'Waiting for the local verifier to return its report.' : lines[line]}</p>
-        <p className="mt-2 font-mono text-[11px] text-teal">{live ? 'LIVE VERIFICATION' : 'SAVED DEMO'}</p>
+        <div role="status">
+          <p className="font-semibold text-fg">{live ? 'Checking your answer' : 'Opening the saved report'}</p>
+          <p className="mt-1 text-sm text-muted">{live ? 'Waiting for the local verifier. External model and search services can take time.' : lines[line]}</p>
+          <p className="mt-2 font-mono text-[11px] text-teal">{live ? 'LIVE VERIFICATION' : 'SAVED DEMO'}</p>
+        </div>
+        {live && <p className="mt-1 text-xs tabular-nums text-muted">Elapsed: {elapsed} s</p>}
       </div>
     </div>
   )

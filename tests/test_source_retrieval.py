@@ -129,7 +129,8 @@ class SourceRetrievalTests(unittest.TestCase):
         search.search.return_value = {"results":[{"url":URL,"content":"Release index"}],"usage":{"credits":0}}
         retriever.retrieve.side_effect = ServiceError("Source failed",code="source_timeout")
         with patch("freshnessguard.engine.policy_for", return_value=POLICY):
-            report = Verifier(llm, search, retriever=retriever,clock=lambda:CHECKED).verify(" ".join(texts))
+            report = Verifier(llm, search, retriever=retriever, clock=lambda:CHECKED,
+                              max_retrievals=1).verify(" ".join(texts))
         self.assertEqual(retriever.retrieve.call_count, 1)
         self.assertEqual(report["metrics"]["source_retrieval_calls"], 1)
 
@@ -148,6 +149,19 @@ class SourceRetrievalTests(unittest.TestCase):
         self.assertEqual(target["url"], "https://www.python.org/downloads/release/python-3140/")
         self.assertEqual(target["original_reference"], "python.org/downloads/release/python-3140/")
         self.assertEqual(target["parent_source_id"], "s1")
+
+    def test_stable_scope_uses_index_when_only_preview_snapshots_are_linked(self):
+        index = "https://vendor.test/downloads/"
+        policy = {**POLICY, "retrieval_rules":[*POLICY["retrieval_rules"],
+                  {"host":"vendor.test", "path":r"/downloads/"}]}
+        for version in ("v42.0.0a3", "v42.0.0b2", "v42.0.0rc1", "v42.0.0-beta.2", "v42.0.0-preview", "v42-ea"):
+            with self.subTest(version=version):
+                preview = f"https://vendor.test/releases/tag/{version}"
+                claim = {"text":"The latest stable Widget release is 41.2.", "source_policy":policy,
+                         "sources":[{"id":"s1", "url":preview, "content":index}]}
+                self.assertEqual(target_for(claim)["url"], index)
+                claim["text"] = "The latest preview Widget release is 41.2."
+                self.assertEqual(target_for(claim)["url"], preview)
 
     def test_blocked_urls_do_not_resolve_or_connect(self):
         urls = ["http://vendor.test/releases/tag/v1", "https://127.0.0.1/releases/tag/v1", "https://vendor.test.evil/releases/tag/v1",

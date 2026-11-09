@@ -1,6 +1,8 @@
 .env
 .env.*
 !.env.example
+/config.json
+/integrations/bifrost/config.json
 .venv/
 venv/
 __pycache__/

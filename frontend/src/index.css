@@ -201,7 +201,14 @@
 
 .verify-textarea {
   transition: border-color .2s ease, box-shadow .2s ease;
-  scrollbar-color: rgb(var(--muted) / .45) transparent;
+}
+
+@media (forced-colors: none) {
+  .app-scroll,
+  .verify-textarea {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--muted) / .75) transparent;
+  }
 }
 
 .verify-radar {

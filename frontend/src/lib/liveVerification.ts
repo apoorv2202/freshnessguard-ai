@@ -9,6 +9,12 @@ const messages: Record<number, string> = {
   504: 'The verification wait timed out. The verifier may still be working.',
 }
 
+export function watchVerificationElapsed(onTick: (seconds: number) => void) {
+  const started = performance.now()
+  const timer = setInterval(() => onTick(Math.floor((performance.now() - started) / 1000)), 1000)
+  return () => clearInterval(timer)
+}
+
 export async function verifyLiveAnswer(answer: string, signal: AbortSignal) {
   let response: Response
   try {

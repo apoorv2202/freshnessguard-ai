@@ -4,9 +4,11 @@ An opt-in freshness verification plugin for the Bifrost AI gateway, backed by Ta
 
 The gateway preserves the original answer and adds `freshnessguard` reports: atomic claims, `supported` / `outdated` / `uncertain` verdicts, evidence quotes, citation URLs, corrections, coverage and search usage. A standalone `/verify` endpoint handles existing answers.
 
-**Demo status:** the React workbench includes Home, Verify, Examples, and Integrations. The Python verifier and native Go plugin are frozen for the demo. One authorized live run through Vite marked “The latest stable Python release series is 3.11.” as outdated with one accepted official citation, 100% coverage, and freshness 0/100 in 9.66 seconds. This is a measured single-run result. The [frontend contract](docs/FRONTEND_CONTRACT.md) documents report and fixture provenance.
+**Demo status:** the React workbench includes Home, Verify, Examples, and Integrations. One earlier live run through Vite marked “The latest stable Python release series is 3.11.” as outdated with one accepted official citation, 100% coverage, and freshness 0/100 in 9.66 seconds. The submission reliability changes were tested offline. Use the labeled Saved Demo for a repeatable decisive walkthrough. The [frontend contract](docs/FRONTEND_CONTRACT.md) documents report and fixture provenance.
 
-See [measured live outcomes](docs/LIVE_RESULTS.md), [troubleshooting](docs/TROUBLESHOOTING.md), [demo script and pitch](docs/DEMO_SCRIPT.md), and [submission status](docs/SUBMISSION.md). Open `demo/report.html` for synthetic outdated/supported examples, `demo/live-supported.html` for a captured official-source live result, and `demo/live-uncertain.html` for a captured live abstention. Live examples identify their capture revision and are not presented as validation of subsequent changes.
+**Offline result:** 25/25 scripted regression cases passed. This is agreement with expected outcomes on fixed fixtures. Live accuracy was not measured by this suite. The latest live attempt was blocked by upstream HTTP 429. Start with Saved Demo for a credential-free walkthrough.
+
+See the [benchmark report](docs/BENCHMARK_REPORT.md), [integration proof](docs/INTEGRATION_PROOF.md), and [judge Q&A](docs/JUDGE_QA.md). The [measured live outcomes](docs/LIVE_RESULTS.md) and [demo script](docs/DEMO_SCRIPT.md) distinguish earlier live observations from saved replays. Open `demo/report.html` for a portable synthetic report.
 
 ## Run the offline demo — Windows
 
@@ -17,7 +19,7 @@ python -m freshnessguard.cli demo
 python -m scripts.render_demo
 Start-Process ./demo/report.html
 python -m unittest discover -s tests -v
-python -m benchmarks.run
+python -B -m benchmarks.final_offline
 ```
 
 The offline demo is explicitly **synthetic**: model decisions and search responses are scripted. It proves report plumbing and failure handling, not fact-checking accuracy. `demo/report.html` is a portable sample report; `demo/report.json` is the corresponding API output.
@@ -37,13 +39,23 @@ Invoke-RestMethod http://127.0.0.1:8765/verify -Method Post -ContentType applica
 
 ## Run the browser demo on Windows
 
-Use Python 3.11+, Node.js with npm, and the existing Bifrost installation. Install the frontend dependencies ahead of the demo with `npm.cmd ci --prefix frontend` if they are missing.
+Use Node.js 22 or newer with npm. From the repository root:
+
+```powershell
+npm.cmd ci --prefix frontend
+Remove-Item Env:FRESHNESSGUARD_ENABLE_LIVE -ErrorAction SilentlyContinue
+npm.cmd run dev --prefix frontend
+```
+
+Open [Examples](http://127.0.0.1:5173/examples) and choose any of the four saved scenarios. This path needs no API credentials, Python verifier, or Bifrost process.
 
 ### Live verification
 
+Install Python 3.11+ for live verification. A fresh setup needs an OSS Bifrost installation with a configured Gemini provider, a Tavily API key, and a local verifier token. Configure the Gemini credential in Bifrost and choose a model that supports structured JSON output. On a fresh checkout, copy [`.env.example`](.env.example) to `.env` and populate it locally using the settings below. Keep an existing `.env` if one is already configured.
+
 Use three PowerShell terminals. Keep each service on loopback.
 
-1. **Bifrost on 8080.** Start the existing configured gateway with its existing Gemini provider and virtual key. If using the cached Windows v2.4.0 binary, run the command below. If the gateway is already running, check its health and reuse it. Startup can contact Gemini for model discovery.
+1. **Bifrost on 8080.** Follow the upstream [Bifrost installation instructions](https://github.com/maximhq/bifrost) for your platform. Start the gateway with your configured Gemini route. If your gateway requires a virtual key, set `BIFROST_VIRTUAL_KEY` in the verifier's local environment file. If using the cached Windows v2.4.0 binary, run the command below. Startup can contact Gemini for model discovery.
 
    ```powershell
    node -e "const p=require('node:child_process').spawnSync(process.env.LOCALAPPDATA+'/bifrost/v2.4.0/bin/bifrost-http.exe-0',['-host','127.0.0.1','-port','8080','-app-dir',process.env.APPDATA+'/Bifrost'],{stdio:'inherit'}); process.exit(p.status ?? 1)"
@@ -164,13 +176,19 @@ Add `x-bf-vk` using your local configuration when required. Live verification's 
 | `not_checked` | The claim did not receive a freshness check, for example because it is historical. |
 | `unavailable` | A verification dependency or step failed. Inspect the report's errors and treat the affected claim as unverified. |
 
-`freshness_score = 100 × supported / (supported + outdated)` over decisive time-sensitive claims. It is `null` when there is no decisive evidence. `coverage` is the decisive fraction of **extracted time-sensitive claims**, not all possible claims in the answer. A high score with low coverage is not an all-clear.
+`freshness_score = 100 × supported / (supported + outdated)` counts time-sensitive verdicts with accepted evidence. With no evidence-backed verdicts, the value is `null` and the UI shows **Not assessed**. **Evidence coverage** divides that same evidence-backed claim count by all extracted time-sensitive claims. Uncertain claims lower coverage. Historical and other `not_checked` claims are outside the denominator. A high freshness score with low coverage reflects only the claims with accepted evidence.
 
 Extraction uses a model through Bifrost, with a maximum of 8 exact-substring claims. Up to 5 time-sensitive claims are searched, using at most 5 basic Tavily calls and 6 model calls per single answer. Timeless claims are `not_checked`. Search failures, conflicting sources, invalid model output, invalid citations or quotes and exhausted budgets abstain. Every decisive verdict requires source IDs and evidence substrings that exist in the actual retrieved content.
 
 The model assesses scope, dates and semantic support. Quote validation proves provenance, **not entailment or factual truth**. Retrieval time does not establish source freshness. No numerical confidence probability is invented. Only outdated claims get a proposed correction; original text is always retained.
 
-Reliability guards require concrete subjects grounded in extracted claim text and skip provider answers marked `length` or `content_filter`. Empty extraction is `no_claims_extracted`, never an all-clear. Corrections are exact excerpts of cited evidence, not model paraphrases. Whitespace-only transcription differences resolve back to an exact original source span; invented words, punctuation and ellipses are not repaired. Recognized Python, Node.js and Bifrost claims require an accepted official source for decisive verdicts; GitHub policy checks the repository owner/path. Other entities have unassessed authority. Explicit unresolved conflicts, future-dated evidence, malformed JSON, duplicate JSON keys and ungrounded citations abstain. Input citation domains are flagged separately; their linked contents are not automatically fetched or authenticated.
+Extraction requires a concrete subject grounded in an exact answer span. Outer whitespace may be removed only if the result is verbatim. Paraphrases fail closed before search. Empty extraction is `no_claims_extracted`. Duplicate spans are counted once, and a narrowly matched past release event can retain its fuller original span as `not_checked`.
+
+Release verdicts require official cited sources and a passing deterministic version check. The source policies cover Python, Java/JDK, Node.js, Bifrost, React, OpenAI models, and Apple devices. Python, Java and Node.js release searches prefer official release sources and drop off-domain results that fail the entity match. GitHub authority is limited to the configured repository path. Release claims outside the deterministic version rules abstain. General claims retain model-assisted assessment and exact quote checks. For a qualifying newer release, the judge can select a backend-provided contiguous passage. That passage goes through the same citation and version validation as a model-transcribed quote.
+
+Each claim ranks its own sources. The default verifier can fetch one allowlisted official page per claim and at most two per answer, only when snippets lack sufficient release proof. Explicit prerelease URLs are skipped for stable and LTS claims. Add `--reuse-evidence` to the Python live `serve` or `verify` command to reuse identical successful searches or official-page fetches within one answer. Reuse retains the original retrieval time and is labeled in the claim diagnostics. Judgment and validation still run separately for each claim. This opt-in does not retain evidence or reports across requests.
+
+The verifier skips provider answers marked `length` or `content_filter`. Explicit unresolved conflicts, future-dated evidence, malformed JSON, duplicate JSON keys and ungrounded citations abstain. Input citation domains are flagged separately. Their linked contents are not automatically fetched.
 
 ## Limits and failure behavior
 
@@ -178,6 +196,7 @@ Reliability guards require concrete subjects grounded in extracted claim text an
 - Input answer <=16,000 characters; native request/response <=256 KB; bounded snippets and 4 sources per search. Service accepts 2 active verifications and returns 429 when busy. No cross-user cache or retained answer database.
 - Advisory fail-open: unavailable verification preserves the answer and adds explicit unavailable metadata/header. Inspect each report's status; outer `checked` means the reporting operation completed, not that every claim is correct.
 - Extraction and Tavily use a 20-second socket timeout. Gemini judgment uses 45 seconds. Official-page retrieval has a 6-second deadline. The Vite adapter waits up to 120 seconds and the native hook up to 150 seconds. Verification requests are not automatically retried by FreshnessGuard. Multi-claim verification can exceed the browser adapter deadline.
+- An upstream HTTP 429 or judgment timeout stops the remaining paid checks for that answer. The report shows the 429 status and a bounded retry delay when the upstream sends a usable `Retry-After` header. The rate-limit panel opens Saved Demo in a separate tab so the answer stays available. The 9.66-second result above was a single earlier run.
   Plugin `config.timeout_ms` can reduce its request deadline (100–150000 ms). Timeout/malformed-service responses preserve the answer with explicit unavailable metadata. The deadline does not cancel work already running inside the Python service.
 - Loopback-only development service. No public deployment, user authentication product, multi-tenant isolation or distributed cancellation is included. A request abandoned by the gateway may finish its bounded background verification work.
 - Answer claims and source snippets are sent to the configured model; search queries go to Tavily. Do not use sensitive production answers without an operator-approved data policy. Embedded source instructions are treated as untrusted data, but prompt injection remains a model-level risk.

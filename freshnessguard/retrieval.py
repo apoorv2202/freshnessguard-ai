@@ -18,6 +18,11 @@ MAX_BYTES = 256_000
 MAX_TEXT = 16_000
 TIMEOUT = 6.0
 MAX_HEADERS = 32_768
+PREVIEW_RELEASE_PATH = re.compile(
+    r"\d(?:a|b|rc)\d+(?=$|[-._/])"
+    r"|(?:^|[-._/])(?:alpha|beta|preview|early[-._]access|ea|pre-?release|release[-._]candidate|rc|nightly|dev)\d*(?=$|[-._/])",
+    re.I,
+)
 
 
 class HeaderBudget:
@@ -76,6 +81,7 @@ def target_for(claim):
     Only the configured apex/www alias may be canonicalized to an index origin.
     """
     policy = claim["source_policy"]
+    stable_scope = re.search(r"\b(?:stable|lts|long.term support)\b", claim["text"], re.I)
     targets = []
     for position, source in enumerate(claim["sources"]):
         if not is_primary(source["url"], policy) or source.get("future_dated"):
@@ -99,6 +105,10 @@ def target_for(claim):
                 continue
             role = source_role(url)
             if role not in ("version_snapshot", "release_index"):
+                continue
+            if stable_scope and role == "version_snapshot" and PREVIEW_RELEASE_PATH.search(urlsplit(url).path):
+                # Save the single fetch for an eligible candidate. A URL without
+                # a preview marker still needs proof from the page itself.
                 continue
             targets.append(((0 if role == "version_snapshot" else 1, position),
                             {"url":url, "parent_source_id":source["id"],

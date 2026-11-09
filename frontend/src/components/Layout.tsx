@@ -21,9 +21,10 @@ export function Layout() {
   return (
     <div className="app-shell isolate flex flex-col">
       <AuroraBackground />
-      <div ref={viewport} className="app-scroll flex min-h-0 flex-1 flex-col overflow-y-auto">
+      <div ref={viewport} tabIndex={0} role="region" aria-label="Page content"
+        className="app-scroll flex min-h-0 flex-1 flex-col overflow-y-auto focus-visible:-outline-offset-2">
         <Navbar />
-        <main className="container-page flex-1 pb-16 pt-8 max-sm:overflow-x-clip sm:pt-12">
+        <main className="container-page flex-1 pb-16 pt-8 sm:pt-12">
           <Outlet context={{ setFreshieMood } satisfies LayoutContext} />
         </main>
         <Footer />

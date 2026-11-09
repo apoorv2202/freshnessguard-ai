@@ -2,6 +2,7 @@ import argparse
 import json
 import os
 import sys
+from functools import partial
 from pathlib import Path
 
 from .clients import BifrostLLM, TavilySearch, ServiceError
@@ -12,8 +13,8 @@ from .config import load_env
 from .retrieval import OfficialPageRetriever
 
 
-def live_verifier():
-    return Verifier(BifrostLLM(), TavilySearch(), retriever=OfficialPageRetriever())
+def live_verifier(*, reuse_evidence=False):
+    return Verifier(BifrostLLM(), TavilySearch(), retriever=OfficialPageRetriever(), reuse_evidence=reuse_evidence)
 
 
 def main():
@@ -23,19 +24,20 @@ def main():
     parser.add_argument("--fixture", action="store_true", help="Synthetic offline mode; never live evidence")
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument("--env-file", type=Path)
+    parser.add_argument("--reuse-evidence", action="store_true", help="Reuse identical evidence fetches within one live answer")
     args = parser.parse_args()
     try:
         load_env(args.env_file)
+        factory = demo_verifier if args.fixture else partial(live_verifier, reuse_evidence=args.reuse_evidence)
         if args.command == "demo":
             print(json.dumps(demo_verifier().verify(ANSWER), indent=2))
         elif args.command == "verify":
             answer = args.answer_file.read_text(encoding="utf-8") if args.answer_file else sys.stdin.read()
-            print(json.dumps((demo_verifier() if args.fixture else live_verifier()).verify(answer), indent=2))
+            print(json.dumps(factory().verify(answer), indent=2))
         else:
             token = os.environ.get("FRESHNESSGUARD_TOKEN", "")
             if not args.fixture and len(token) < 24:
                 raise ServiceError("Set FRESHNESSGUARD_TOKEN to a random token of at least 24 characters")
-            factory = demo_verifier if args.fixture else live_verifier
             factory()  # Fail startup clearly if live configuration is missing.
             server = make_server(factory, token, args.port)
             print(f"FreshnessGuard {'SYNTHETIC FIXTURE' if args.fixture else 'LIVE'} on http://127.0.0.1:{args.port}", flush=True)

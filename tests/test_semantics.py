@@ -31,7 +31,7 @@ class SemanticTests(unittest.TestCase):
         claim["checked_at"] = fixture["checked_at"]
         Verifier._apply_decision(claim, fixture["reconstructed_decision"])
         self.assertEqual(claim["proposed_verdict"], "supported")
-        self.assertEqual(claim["proposed_assessment"]["reason"], fixture["reconstructed_decision"]["reason"])
+        self.assertEqual(claim["proposed_assessment"]["reason"], "Model proposal before final evidence validation.")
         self.assertEqual(claim["verdict"], "uncertain")
         self.assertEqual(claim["semantic_validation"]["status"], "rejected")
         self.assertIsNone(claim["correction"])
@@ -76,8 +76,11 @@ class SemanticTests(unittest.TestCase):
 
     def test_current_same_entity_scope_and_channel_can_be_supported(self):
         claim, decision = self.make_case("As of 2026-11-06, the latest stable release series of Widget is 41.2.")
+        decision["reason"] = decision["quotes"][0]["text"]
         Verifier._apply_decision(claim, decision)
         self.assertEqual(claim["verdict"], "supported")
+        self.assertEqual(claim["reason"], "The verifier accepted the cited evidence for this claim.")
+        self.assertEqual(claim["quotes"], decision["quotes"])
 
     def test_current_newer_version_can_ground_outdated(self):
         claim, decision = self.make_case("As of 2026-11-06, the latest stable release series of Widget is 41.3.", verdict="outdated")

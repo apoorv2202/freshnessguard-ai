@@ -12,6 +12,20 @@ from .evidence import is_primary, policy_for, publication_date, source_role
 MAX_CURRENT_AGE_DAYS = 30
 VERSION = re.compile(r"(?<![\w.])v?(\d+\.\d+(?:\.\d+){0,2})(?!\d|\.\d)", re.I)
 LATEST = re.compile(r"\b(latest|current|newest|most recent)\b", re.I)
+JAVA_FEATURE = re.compile(r"\b(?:java(?: se)?|(?:open)?jdk)\s+(?:version\s+)?(\d{1,2})(?!\w|\.\d)", re.I)
+
+
+def release_versions(claim, text):
+    values = {tuple(map(int, m[1].split("."))) for m in VERSION.finditer(text)}
+    if policy_for(claim["text"])["entity"] == "Java":
+        values.update((int(m[1]),) for m in JAVA_FEATURE.finditer(text))
+    return values
+
+
+def version_scope(claim, version):
+    if policy_for(claim["text"])["entity"] == "Java" and not VERSION.search(claim["text"]):
+        return version[:1]
+    return version[:2] if re.search(r"\b(series|branch)\b", claim["text"], re.I) else version
 
 
 def latest_version_claim(text):
@@ -19,7 +33,11 @@ def latest_version_claim(text):
 
 
 def version_retrieval_claim(text):
-    return latest_version_claim(text) or bool(VERSION.search(text) and re.search(
+    if latest_version_claim(text):
+        return True
+    if JAVA_FEATURE.search(text) and re.search(r"\b(?:lts|long.term support)\b", text, re.I):
+        return True
+    return bool(release_versions({"text":text}, text) and re.search(
         r"\b(newer than|older than|later than|earlier than|compared (?:to|with)|versus|vs\.?|superseded)\b", text, re.I))
 
 
@@ -30,7 +48,10 @@ def latest_query(text, subject, fallback, checked_at):
     entity = policy["entity"] or subject
     entity = VERSION.sub("", entity).strip(" ,.;:-")
     channel = " LTS" if re.search(r"\blts\b|long.term support", text, re.I) else " stable" if re.search(r"\bstable\b", text, re.I) else ""
-    intent = "latest" if latest_version_claim(text) else "release history " + " ".join(m.group(1) for m in VERSION.finditer(text))
+    versions = [m[1] for m in VERSION.finditer(text)]
+    if policy["entity"] == "Java" and not versions:
+        versions = [m[1] for m in JAVA_FEATURE.finditer(text)]
+    intent = "latest" if latest_version_claim(text) else "release history " + " ".join(versions)
     indexes = " ".join(policy.get("release_indexes", []))
     # Target release indexes, not dated news/feed matches. Check time remains in
     # verification metadata; do not bias latest searches toward the alleged value.
@@ -55,6 +76,8 @@ def current_assertion(text, checked):
 
 def entity_matches(claim, text):
     entity = policy_for(claim["text"])["entity"]
+    if entity == "Java":
+        return bool(re.search(r"\b(?:java|(?:open)?jdk)\b", text, re.I))
     subject = entity or claim.get("subject", "")
     subject = VERSION.sub("", subject)
     tokens = [t for t in re.findall(r"[\w]+", subject.casefold())
@@ -65,7 +88,6 @@ def entity_matches(claim, text):
 
 def version_assertions(claim, text, checked):
     """Bound comparisons to a single sentence/line, not a whole release history."""
-    series = bool(re.search(r"\b(series|branch)\b", claim["text"], re.I))
     stable = bool(re.search(r"\bstable\b", claim["text"], re.I))
     lts = bool(re.search(r"\blts\b|long.term support", claim["text"], re.I))
     assertions = []
@@ -83,9 +105,9 @@ def version_assertions(claim, text, checked):
         narrow = r"maintenance|\bpatch\b|(?:within|for|in) .*?(?:branch|series)|\d+\.\d+(?:\.x)?\s+(?:branch|series)"
         if re.search(narrow, sentence, re.I) and not re.search(narrow, claim["text"], re.I):
             continue
-        if re.search(r"\b(alpha|beta|preview|prerelease|pre-release|release candidate|rc\d*)\b|\d(?:a|b|rc)\d", sentence, re.I):
+        if re.search(r"\b(alpha|beta|preview|early[- ]access|prerelease|pre-release|release candidate|rc\d*)\b|\d(?:(?:a|b|rc)\d|[-.]ea\b)", sentence, re.I):
             continue
-        values = {tuple(int(v) for v in m.group(1).split(".")) for m in VERSION.finditer(sentence)}
+        values = release_versions(claim, sentence)
         # Multiple version values in one passage need richer scope interpretation.
         if len(values) != 1 or not current_assertion(sentence, checked):
             continue
@@ -99,7 +121,7 @@ def version_assertions(claim, text, checked):
                     rf"|(?<![\w.])v?{number}\s+(?:is|remains)\s+(?:now\s+)?(?:the\s+)?{word}\b")
         if not re.search(relation, sentence, re.I):
             continue
-        assertions.append({"version":version[:2] if series else version, "text":sentence})
+        assertions.append({"version":version_scope(claim, version), "text":sentence})
     return assertions
 
 
@@ -151,17 +173,18 @@ def dated_release_facts(claim, text, checked, diagnostics=None):
         if not re.search(r"\b(stable|final)\b|general availability", passage, re.I):
             rejected("explicit_stable_or_final_channel_missing")
             continue
-        if re.search(r"\b(alpha|beta|preview|prerelease|pre-release|release candidate|rc\d*|withdrawn|yanked|retracted|unreleased|scheduled|planned)\b|\d(?:a|b|rc)\d|\bnot (?:a |yet )?(?:stable|released|final)", passage, re.I):
+        if re.search(r"\b(alpha|beta|preview|early[- ]access|prerelease|pre-release|release candidate|rc\d*|withdrawn|yanked|retracted|unreleased|scheduled|planned)\b|\d(?:(?:a|b|rc)\d|[-.]ea\b)|\bnot (?:a |yet )?(?:stable|released|final)", passage, re.I):
             rejected("preview_planned_negated_or_withdrawn_release")
             continue
-        if "?" in passage or re.search(r"\b(might|may|could|possibly|will be|would be|expected to|not|never|cannot|isn't|hasn't|won't)\b", passage, re.I):
+        if "?" in passage or re.search(r"\b(might|may|could|possibly|will be|would be|expected to|not|never|cannot|isn't|hasn't|won't)\b",
+                                      re.sub(DATE_LITERAL, "", passage), re.I):
             rejected("speculative_negated_or_question_passage")
             continue
         lts = bool(re.search(r"\blts\b|long.term support", claim["text"], re.I))
         if bool(re.search(r"\blts\b|long.term support", passage, re.I)) != lts:
             rejected("lts_scope_mismatch")
             continue
-        values = {tuple(int(v) for v in m.group(1).split(".")) for m in VERSION.finditer(passage)}
+        values = release_versions(claim, passage)
         if len(values) != 1:
             rejected("version_not_unique_in_passage")
             continue
@@ -169,8 +192,9 @@ def dated_release_facts(claim, text, checked, diagnostics=None):
         entity = policy_for(claim["text"])["entity"] or VERSION.sub("", claim.get("subject", "")).strip()
         entity = re.sub(r"\b(release|series|version|branch)\b", "", entity, flags=re.I).strip()
         number = re.escape(".".join(map(str, full_version)))
-        binding = (rf"{re.escape(entity)}\s+(?:(?:version|release|series|is|was)\s+){{0,4}}v?{number}(?!\w|\.\d)"
-                   rf"|\b(?:version|release)\s+v?{number}\s+(?:of|for)\s+{re.escape(entity)}\b")
+        entity_pattern = r"(?:java(?: se)?|(?:open)?jdk)" if entity == "Java" else re.escape(entity)
+        binding = (rf"\b{entity_pattern}\s+(?:(?:version|release|series|is|was)\s+){{0,4}}v?{number}(?!\w|\.\d)"
+                   rf"|\b(?:version|release)\s+v?{number}\s+(?:of|for)\s+{entity_pattern}\b")
         if not entity or not re.search(binding, passage, re.I):
             rejected("entity_version_relation_missing")
             continue
@@ -192,7 +216,7 @@ def dated_release_facts(claim, text, checked, diagnostics=None):
         if not re.search(r"\b(?:release date|released|stable release|final release|latest|current|newest|most recent)\b", passage, re.I):
             rejected("release_assertion_missing")
             continue
-        version = full_version[:2] if re.search(r"\b(series|branch)\b", claim["text"], re.I) else full_version
+        version = version_scope(claim, full_version)
         date, kind = min(dates, key=lambda item:item[0])
         fact = {"version":version, "full_version":full_version, "date":date.isoformat(), "date_kind":kind, "text":passage}
         if fact not in facts:
@@ -215,7 +239,7 @@ def adjacent_release_window(claim, passage):
         return len(re.split(r"(?<=[.!?])\s+(?!\d)", passage)) == 1
     date_only = rf"(?:release date|released(?: on)?|as of|effective(?: date)?)\s*[:=]?\s*{DATE_LITERAL}\.?"
     return (len(paragraphs) <= 3 and any(re.fullmatch(date_only, p, re.I) for p in paragraphs)
-            and all(re.fullmatch(date_only, p, re.I) or (entity_matches(claim, p) and VERSION.search(p)) for p in paragraphs))
+                and all(re.fullmatch(date_only, p, re.I) or (entity_matches(claim, p) and release_versions(claim, p)) for p in paragraphs))
 
 
 def release_evidence_window(claim, source, checked_at):
@@ -224,8 +248,7 @@ def release_evidence_window(claim, source, checked_at):
     if (not checked or source.get("future_dated")
             or not eligible_release_source(source, claim["source_policy"])):
         return None
-    parts = 2 if re.search(r"\b(series|branch)\b", claim["text"], re.I) else None
-    targets = {tuple(map(int, m[1].split(".")[:parts])) for m in VERSION.finditer(claim["text"])}
+    targets = {version_scope(claim, v) for v in release_versions(claim, claim["text"])}
     if len(targets) != 1:
         return None
     target = next(iter(targets))
@@ -251,7 +274,7 @@ def complete_release_quotes(claim, quotes, checked_at):
     for quote in quotes:
         source = sources[quote["source_id"]]
         text = quote["text"]
-        values = {tuple(map(int, m[1].split("."))) for m in VERSION.finditer(text)}
+        values = release_versions(claim, text)
         if (source.get("future_dated") or not eligible_release_source(source, policy)
                 or not entity_matches(claim, text) or len(values) != 1
                 or dated_release_facts(claim, text, checked.date())):
@@ -299,9 +322,7 @@ def validate_latest_decision(claim, verdict, ids, quotes, checked_at):
     checked = checked_time.date()
     if not re.search(r"\bstable\b|\blts\b|long.term support", claim["text"], re.I):
         return {"status":"rejected", "reasons":["Latest-version channel is unspecified"]}
-    targets = {tuple(int(v) for v in m.group(1).split(".")) for m in VERSION.finditer(claim["text"])}
-    series = bool(re.search(r"\b(series|branch)\b", claim["text"], re.I))
-    targets = {v[:2] if series else v for v in targets}
+    targets = {version_scope(claim, v) for v in release_versions(claim, claim["text"])}
     if len(targets) != 1:
         return {"status":"rejected", "reasons":["Latest-version target or granularity is ambiguous"]}
     target = next(iter(targets))

@@ -46,7 +46,7 @@ class EvidenceDiagnosticsTests(unittest.TestCase):
         Verifier._apply_decision(claim, saved["decision"])
         self.assertEqual(claim["verdict"], "uncertain")
 
-    def test_saved_sources_are_exact_judge_payload_and_replayed_offline(self):
+    def test_saved_source_text_reaches_judge_exactly_and_retains_report_provenance(self):
         saved = self.saved()
         original = saved["claim"]
         llm = Mock()
@@ -58,7 +58,9 @@ class EvidenceDiagnosticsTests(unittest.TestCase):
         result = report["claims"][0]
         self.assertEqual(result["verdict"], "uncertain")
         payload = llm.complete.call_args_list[1].args[1]
-        self.assertEqual(payload["sources"], result["sources"])
+        self.assertEqual(payload["sources"], [{k:v for k,v in source.items() if k != "retrieved_at"}
+                                              for source in result["sources"]])
+        self.assertTrue(all(source["retrieved_at"] == payload["checked_at"] for source in result["sources"]))
         self.assertEqual([s["content"] for s in payload["sources"]], [s["content"] for s in original["sources"]])
         self.assertEqual(report["metrics"]["search_calls"], 1)
         self.assertEqual(report["metrics"]["llm_calls"], 2)

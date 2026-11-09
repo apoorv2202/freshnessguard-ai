@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { BookOpen, ChevronDown, CircleAlert, CircleCheck, CircleHelp, ExternalLink, MinusCircle } from 'lucide-react'
 import type { Claim, Source, VerificationReport } from '../../contract/types'
 import { citationUrl } from '../lib/savedReports'
@@ -50,6 +51,8 @@ function Evidence({ claim }: { claim: Claim }) {
 
   return (
     <>
+      {(claim.retrieval?.search_reused === true || claim.source_retrieval?.reused === true) &&
+        <p className="mb-4 text-xs text-muted">Some source material was retrieved for another claim in this same verification. The original retrieval times are shown below.</p>}
       {!cited.size && <p className="mb-4 rounded-xl border border-fg/10 bg-bg/40 p-3 text-sm text-muted">No accepted citations for this claim. Retained sources are provided for context.</p>}
       {!claim.sources.length && <p className="text-sm text-muted">No source material was recorded for this claim.</p>}
       <div className="space-y-3">{acceptedSources.map(sourceCard)}</div>
@@ -68,25 +71,34 @@ export function VerificationResults({ report }: { report: VerificationReport }) 
   const [expanded, setExpanded] = useState(true)
   const claim = report.claims[selected]
   const unavailable = report.status === 'unavailable' || report.status === 'upstream_error'
+  const rateLimit = report.errors.find((error) => error.http_status === 429)
   const count = report.claims.length
 
   return (
     <>
       <div className="glass grid grid-cols-2 gap-2 rounded-3xl p-2 sm:grid-cols-4 sm:gap-3 sm:p-3">
         <div className="rounded-2xl bg-teal/10 p-3 sm:p-4"><p className="text-xs font-medium uppercase tracking-wider text-teal">Freshness</p>
-          <p className="mt-1 text-2xl font-semibold tracking-tight">{report.freshness_score == null ? <span className="text-base text-muted">Not assessed</span> : `${report.freshness_score}%`}</p></div>
-        <div className="rounded-2xl bg-lavender/10 p-3 sm:p-4"><p className="text-xs font-medium uppercase tracking-wider text-lavender">Coverage</p>
-          <p className="mt-1 text-2xl font-semibold tracking-tight">{report.coverage == null ? <span className="text-base text-muted">Not assessed</span> : `${Math.round(report.coverage * 100)}%`}</p></div>
+          <p className="mt-1 text-2xl font-semibold tracking-tight">{report.freshness_score == null ? <span className="text-base text-muted">Not assessed</span> : `${report.freshness_score}%`}</p>
+          <p className="mt-1 text-xs leading-relaxed text-muted">Supported claims divided by all supported and outdated claims with accepted evidence.</p></div>
+        <div className="rounded-2xl bg-lavender/10 p-3 sm:p-4"><p className="text-xs font-medium uppercase tracking-wider text-lavender">Evidence coverage</p>
+          <p className="mt-1 text-2xl font-semibold tracking-tight">{report.coverage == null ? <span className="text-base text-muted">Not assessed</span> : `${Math.round(report.coverage * 100)}%`}</p>
+          <p className="mt-1 text-xs leading-relaxed text-muted">Claims with decisive evidence divided by time-sensitive claims. Uncertain lowers coverage. Historical claims are excluded.</p></div>
         <div className="rounded-2xl bg-bg/35 p-3 sm:p-4"><p className="text-xs font-medium uppercase tracking-wider text-muted">Claims</p><p className="mt-1 text-2xl font-semibold tracking-tight">{count}</p></div>
         <div className="rounded-2xl bg-bg/35 p-3 sm:p-4"><p className="text-xs font-medium uppercase tracking-wider text-muted">Report checked</p><p className="mt-2 text-sm font-medium">{timeLabel(report.checked_at)}</p></div>
       </div>
       {unavailable && <div role="status" className="glass rounded-2xl p-5">
         <h3 className="flex items-center gap-2 font-semibold text-warn"><CircleAlert size={18} aria-hidden="true" /> Verification unavailable</h3>
-        <p className="mt-2 text-sm text-muted">{report.errors.some((error) => error.code === 'timeout')
+        <p className="mt-2 text-sm text-muted">{rateLimit
+          ? rateLimit.retry_after_seconds !== undefined
+            ? `An upstream service is rate-limited. Wait at least ${rateLimit.retry_after_seconds} seconds before trying again.`
+            : 'An upstream service is rate-limited. Check the provider quota before trying again.'
+          : report.errors.some((error) => error.code === 'timeout')
           ? 'An upstream verification step timed out.'
           : report.status === 'upstream_error' ? 'An upstream service returned an error during verification.'
             : 'The verifier could not complete the check.'} Review any claim results and diagnostics below.</p>
         {report.errors.map((error, index) => <p key={index} className="mt-2 break-words font-mono text-xs text-muted">{error.stage} · {error.code}{error.http_status == null ? '' : ` · HTTP ${error.http_status}`}</p>)}
+        {rateLimit && report.mode === 'live' && <Link to="/verify?demo=replay" target="_blank" rel="noopener noreferrer"
+          className="mt-3 inline-block text-sm font-medium text-teal underline underline-offset-4">Open Saved Demo in a new tab</Link>}
       </div>}
       {report.warnings.length > 0 && <ul className="space-y-1 rounded-2xl border border-warn/20 bg-warn/5 p-4 text-sm text-muted">
         {report.warnings.map((warning, index) => <li key={index}>{warning}</li>)}

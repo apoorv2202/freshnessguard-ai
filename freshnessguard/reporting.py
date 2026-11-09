@@ -55,15 +55,15 @@ def render_report(report):
     if report.get("run_note"):
         notes += f'<aside class="notice">{esc(report["run_note"])}</aside>'
     score, metrics = report.get("freshness_score"), report["metrics"]
-    values = [("Freshness score", str(score) + "/100" if score is not None else "Unscored"),
-              ("Extracted-claim coverage", str(round(100 * report.get("coverage", 0))) + "%"),
+    values = [("Freshness score", str(score) + "/100" if score is not None else "Not assessed"),
+              ("Evidence coverage", str(round(100 * report.get("coverage", 0))) + "%"),
               ("Tavily calls", metrics.get("search_calls", 0)),
               ("Live processing" if live else "Fixture processing", str(round(metrics.get("latency_ms", 0) / 1000, 2)) + "s")]
     tiles = "".join(f'<div class="metric"><small>{esc(label)}</small><strong>{esc(value)}</strong></div>' for label,value in values)
     return ('<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FreshnessGuard AI | Evidence report</title><style>' + STYLE + '</style></head><body><main>'
         f'<header><div class="label">FRESHNESSGUARD AI / BIFROST + TAVILY</div><h1>Answers change.<br>Evidence matters.</h1><p>Advisory verification / Original response preserved</p><small>{mode} / {esc(report.get("checked_at"))} / {esc(report.get("model") or "scripted model")}</small></header>'
         f'<aside class="notice"><strong>{mode}</strong><br>{notice}</aside><div class="metrics">{tiles}</div>'
-        '<p class="muted">The score counts supported versus outdated decisive claims. Uncertain claims are excluded: read coverage alongside the score. Official domains and quote provenance do not prove semantic correctness.</p>'
+        '<p class="muted">Freshness is the supported share of claims with accepted evidence. Evidence coverage is the share of time-sensitive claims with accepted evidence and a decisive verdict. Uncertain claims lower coverage. Historical claims are excluded.</p>'
         f'{notes}<p class="label">ORIGINAL ANSWER / UNCHANGED</p><div class="original">{esc(report["original_answer"])}</div><p class="label" style="margin-top:34px">CLAIM-LEVEL EVIDENCE</p>'
         + ("".join(cards) or '<p class="muted">No claims extracted. Read warnings; this is not an all-clear.</p>')
         + f'<footer>Status: {esc(report["status"])} / Model calls: {metrics.get("llm_calls", 0)} / Reported Tavily credits: {metrics.get("tavily_credits", 0)} / Credit usage complete: {esc(metrics.get("credit_usage_complete"))}<br>{esc(report.get("scope", ""))}<br>Advisory research output. No silent rewriting, no calibrated confidence probability, no guarantee of completeness.</footer></main></body></html>')

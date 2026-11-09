@@ -8,7 +8,7 @@ const FRESHNESS_FILLED = 4
 export function ProductPreview() {
   return (
     <Reveal as="section" className="relative mt-20 sm:mt-28" delay={80}>
-      <div aria-hidden="true" className="pointer-events-none absolute -inset-x-6 -inset-y-10 -z-10">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -inset-y-10 -z-10 sm:-inset-x-6">
         <div
           className="mx-auto h-full max-w-4xl rounded-[3rem] opacity-40 blur-3xl"
           style={{
@@ -57,7 +57,7 @@ export function ProductPreview() {
               ))}
             </ol>
 
-            <div className="mt-5 grid gap-4 lg:grid-cols-[1.5fr_1fr]">
+            <div className="mt-5 grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
               {/* Left column: claim + correction */}
               <div className="flex flex-col gap-4">
                 <div className="rounded-2xl border border-fg/[0.08] bg-card/70 p-5 sm:p-6">

@@ -3,26 +3,50 @@ import json
 import math
 import os
 import re
+from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, build_opener, HTTPRedirectHandler
 
 
 DEFAULT_HTTP_TIMEOUT = 20
+MAX_RETRY_AFTER = 7 * 24 * 60 * 60
+
+
+def retry_after_seconds(value):
+    if not isinstance(value, str) or len(value) > 80:
+        return None
+    value = value.strip()
+    if re.fullmatch(r"[0-9]{1,6}", value):
+        seconds = int(value)
+    else:
+        try:
+            date = parsedate_to_datetime(value)
+            if date.tzinfo is None:
+                date = date.replace(tzinfo=timezone.utc)
+            seconds = max(0, math.ceil((date - datetime.now(timezone.utc)).total_seconds()))
+        except (ValueError, TypeError, OverflowError):
+            return None
+    return seconds if seconds <= MAX_RETRY_AFTER else None
 
 
 class ServiceError(Exception):
     """Safe structured diagnostics; never includes an upstream body or headers."""
-    def __init__(self, message, *, code="service_error", http_status=None):
+    def __init__(self, message, *, code="service_error", http_status=None, retry_after=None):
         super().__init__(message)
         # Older fixtures/callers still construct this exception by message.
         legacy = re.fullmatch(r"Upstream HTTP ([1-5][0-9]{2})", message)
         self.http_status = http_status if http_status is not None else int(legacy[1]) if legacy else None
         self.code = "http_error" if self.http_status is not None else code
+        self.retry_after = retry_after
 
     def diagnostic(self, stage):
-        return {"stage":stage, "category":"upstream_error" if self.http_status is not None else "unavailable",
+        result = {"stage":stage, "category":"upstream_error" if self.http_status is not None else "unavailable",
                 "code":self.code, "http_status":self.http_status,
                 "retryable":self.http_status in (429, 500, 502, 503, 504) or self.code in ("network_error", "timeout")}
+        if self.http_status == 429 and self.retry_after is not None:
+            result["retry_after_seconds"] = self.retry_after
+        return result
 
 
 class RejectAPIRedirects(HTTPRedirectHandler):
@@ -90,8 +114,9 @@ def post_json(url, body, headers=None, timeout=DEFAULT_HTTP_TIMEOUT):
                 raise ServiceError("Upstream returned invalid JSON", code="invalid_http_json") from None
     except HTTPError as exc:
         status = exc.code
+        retry_after = retry_after_seconds(exc.headers.get("Retry-After")) if status == 429 and exc.headers else None
         exc.close()
-        raise ServiceError(f"Upstream HTTP {status}", http_status=status) from None
+        raise ServiceError(f"Upstream HTTP {status}", http_status=status, retry_after=retry_after) from None
     except (URLError, TimeoutError, OSError) as exc:
         timed_out = isinstance(exc, TimeoutError) or isinstance(getattr(exc, "reason", None), TimeoutError)
         raise ServiceError("Upstream unavailable", code="timeout" if timed_out else "network_error") from None
@@ -106,15 +131,16 @@ class BifrostLLM:
         if not self.model:
             raise ServiceError("Set BIFROST_MODEL to a configured provider/model")
 
-    def complete(self, system, payload, *, timeout=DEFAULT_HTTP_TIMEOUT):
+    def complete(self, system, payload, *, timeout=DEFAULT_HTTP_TIMEOUT, response_format=None):
         headers = {"x-freshnessguard-internal": "1"}
         if os.environ.get("BIFROST_VIRTUAL_KEY"):
             headers["x-bf-vk"] = os.environ["BIFROST_VIRTUAL_KEY"]
         body = {
             "model": self.model, "stream": False, "temperature": 0,
             "messages": [{"role": "system", "content": system},
-                         {"role": "user", "content": json.dumps(payload)}],
-            "response_format": {"type": "json_object"}, "max_tokens": 2800,
+                         {"role": "user", "content": json.dumps(payload, ensure_ascii=False, separators=(",", ":"))}],
+            "response_format": response_format if response_format is not None else {"type": "json_object"},
+            "max_tokens": 2800,
         }
         # The configured Gemini 3 Flash supports minimal thinking. Keeping its
         # reasoning budget low prevents thinking from consuming the JSON budget.

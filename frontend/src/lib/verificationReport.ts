@@ -13,6 +13,8 @@ const oneOf = (value: unknown, options: string[]) => string(value) && options.in
 const diagnostic = (value: unknown) => record(value) && string(value.stage) && string(value.code)
   && oneOf(value.category, ['upstream_error', 'unavailable'])
   && (value.http_status == null || Number.isInteger(value.http_status) && numberIn(value.http_status, 599))
+  && (value.retry_after_seconds === undefined || value.http_status === 429
+    && Number.isInteger(value.retry_after_seconds) && numberIn(value.retry_after_seconds, 604800))
 const witness = (value: unknown) => record(value) && string(value.source_id) && string(value.version)
   && date(value.date) && oneOf(value.date_kind, ['release_date', 'effective_date', 'as_of'])
 const nonnegative = (value: unknown) => numberIn(value, Number.MAX_VALUE)

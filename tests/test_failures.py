@@ -153,8 +153,8 @@ class FailureTests(unittest.TestCase):
         expanded_subject = {"text":"The major 3.15 branch was initially released on October 9, 2026",
                             "subject":"Python 3.15 branch", "time_sensitive":False}
         for invalid_claims, message in (
-            ([rewritten, expanded_subject], "Invalid claim extraction"),
-            ([expanded_subject], "Claim extraction lacks a concrete grounded subject"),
+            ([rewritten, expanded_subject], "Invalid claim extraction: claim text must be a verbatim span of the answer. Include the original subject and connecting words"),
+            ([expanded_subject], "Claim extraction lacks a concrete grounded subject. Copy the subject from within the claim span"),
         ):
             with self.subTest(message=message):
                 search = Mock()
@@ -186,6 +186,83 @@ class FailureTests(unittest.TestCase):
         self.assertEqual([claim["verdict"] for claim in report["claims"]], ["uncertain", "not_checked", "not_checked"])
         search.search.assert_called_once()
         post.assert_called_once()
+
+    def test_recorded_two_sentence_python_subject_requires_antecedent_in_span(self):
+        first = "Python 3.11 is the latest stable Python release series"
+        second = "It is the newest version recommended for production use"
+        answer = f"{first}. {second}."
+        for grounded in (False, True):
+            with self.subTest(grounded=grounded):
+                claims = [{"text":text, "subject":"Python 3.11", "time_sensitive":True,
+                           "query":"Python stable releases"} for text in (first, answer if grounded else second)]
+                search = Mock()
+                search.search.return_value = {"results":[], "usage":{"credits":0}}
+                with patch("freshnessguard.clients.post_json", return_value=completion(json.dumps({"claims":claims}))) as post:
+                    report = Verifier(self.client(), search).verify(answer)
+                post.assert_called_once()
+                self.assertEqual(report["original_answer"], answer)
+                if grounded:
+                    self.assertEqual(report["extraction"]["status"], "ok")
+                    self.assertEqual([c["text"] for c in report["claims"]], [first, answer])
+                    self.assertEqual(search.search.call_count, 2)
+                else:
+                    self.assertEqual(report["status"], "unavailable")
+                    self.assertEqual(report["extraction"]["error"]["code"], "invalid_extraction")
+                    self.assertIn("Copy the subject from within the claim span", report["warnings"][0])
+                    self.assertEqual(report["claims"], [])
+                    search.search.assert_not_called()
+
+    def test_recorded_pronoun_paraphrase_fails_despite_valid_json_and_flags(self):
+        first = "Python 3.11 is the latest stable Python release series."
+        answer = first + " It is the newest version recommended for production use."
+        claims = [{"text":text, "subject":"Python 3.11", "time_sensitive":True, "query":"Python releases"}
+                  for text in (first, "Python 3.11 is the newest version recommended for production use.")]
+        search = Mock()
+        with patch("freshnessguard.clients.post_json", return_value=completion(json.dumps({"claims":claims}))) as post:
+            report = Verifier(self.client(), search).verify(answer)
+        self.assertEqual(report["status"], "unavailable")
+        self.assertEqual(report["claims"], [])
+        self.assertEqual(report["extraction"]["error"]["code"], "invalid_extraction")
+        self.assertIn("claim text must be a verbatim span", report["warnings"][0])
+        post.assert_called_once()
+        search.search.assert_not_called()
+
+    def test_time_sensitive_flag_must_be_present_and_boolean(self):
+        for flag, message in (
+            ({}, "missing time_sensitive flag"),
+            ({"time_sensitive":"true"}, "time_sensitive must be a JSON boolean"),
+            ({"time_sensitive":1}, "time_sensitive must be a JSON boolean"),
+        ):
+            with self.subTest(flag=flag):
+                search = Mock()
+                claims = [{"text":ANSWER, "subject":"Python", "query":"Python releases", **flag}]
+                with patch("freshnessguard.clients.post_json", return_value=completion(json.dumps({"claims":claims}))) as post:
+                    report = Verifier(self.client(), search).verify(ANSWER)
+                self.assert_extraction_failure(report, "invalid_extraction")
+                self.assertIn(message, report["warnings"][0])
+                body = post.call_args.args[1]
+                schema = body["response_format"]["json_schema"]["schema"]
+                items = schema["properties"]["claims"]["items"]
+                self.assertEqual(body["response_format"]["type"], "json_schema")
+                self.assertIn("time_sensitive", items["required"])
+                self.assertEqual(items["properties"]["time_sensitive"], {"type":"boolean"})
+                self.assertEqual(post.call_args.kwargs["timeout"], 20)
+                post.assert_called_once()
+                search.search.assert_not_called()
+
+    def test_grounded_historical_iphone_claim_does_not_trigger_search(self):
+        answer = "The first iPhone was introduced by Apple on January 9, 2007."
+        claims = [{"text":answer, "subject":"iPhone", "time_sensitive":False}]
+        search = Mock()
+        with patch("freshnessguard.clients.post_json", return_value=completion(json.dumps({"claims":claims}))) as post:
+            report = Verifier(self.client(), search).verify(answer)
+        self.assertEqual(report["status"], "no_time_sensitive_claims")
+        self.assertEqual(report["claims"][0]["text"], answer)
+        self.assertEqual(report["claims"][0]["subject"], "iPhone")
+        self.assertEqual(report["claims"][0]["verdict"], "not_checked")
+        self.assertIsNone(report["freshness_score"])
+        post.assert_called_once()
+        search.search.assert_not_called()
 
     def test_judge_429_preserves_extraction_quality_but_excludes_detector_score(self):
         verifier = demo_verifier()
@@ -242,7 +319,7 @@ class FailureTests(unittest.TestCase):
         self.assertEqual(claim["semantic_validation"]["status"], "passed")
 
     def test_gemini_judgment_beyond_extended_timeout_is_unavailable_without_retry(self):
-        report, requests = self.verify_with_simulated_judgment(46)
+        report, requests = self.verify_with_simulated_judgment(86.50)
         self.assertEqual(requests, [("extraction", 20), ("search", 20), ("judgment", 45)])
         self.assertEqual(report["status"], "unavailable")
         self.assertEqual(report["extraction"]["status"], "ok")
@@ -250,6 +327,7 @@ class FailureTests(unittest.TestCase):
         self.assertEqual(report["errors"][0]["code"], "timeout")
         self.assertEqual(report["claims"][0]["verdict"], "uncertain")
         self.assertEqual(report["claims"][0]["citation_ids"], [])
+        self.assertEqual(report["claims"][0]["reason"], "Upstream unavailable")
         self.assertEqual(report["coverage"], 0)
         self.assertIsNone(report["freshness_score"])
 
