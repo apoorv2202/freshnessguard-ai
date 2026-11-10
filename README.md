@@ -25,6 +25,12 @@ Instead of blindly trusting a confident response, FreshnessGuard extracts indivi
 
 *FreshnessGuard AI — a browser-based workbench for investigating the freshness of AI-generated answers.*
 
+### 🎥 Watch the Live Demo
+
+[▶️ Watch FreshnessGuard AI — Live Hackathon Demonstration](https://drive.google.com/file/d/15i9kHjsxAcz9NpkxW25dkydu5meLvKhY/view)
+
+The demonstration showcases the working Bifrost + Gemini + Tavily integration, live claim verification, evidence-backed corrections, freshness scoring, and official-source citations.
+
 ### 📊 Project Presentation
 
 **[View the FreshnessGuard AI Pitch Deck (PPTX)](docs/FreshnessGuard-AI-Final-Pitch.pptx)**
@@ -421,6 +427,26 @@ These controlled scenarios test whether the verifier accepts qualifying evidence
 ---
 
 ## 🎬 Demonstration Provenance
+
+### Successful Live Verification — November 10, 2026
+
+A live end-to-end verification was completed using Bifrost, Gemini, Tavily, and FreshnessGuard's deterministic validation pipeline.
+
+**Claim:** The latest stable Python release series is 3.11.
+
+**Observed result:**
+- Verdict: `OUTDATED`
+- Freshness score: `0%`
+- Evidence coverage: `100%`
+- Accepted citations: `1`
+- Evidence: Official Python 3.14.0 stable release page
+- Release date: October 7, 2025
+
+The system identified the claim as outdated and presented an evidence-backed correction with inspectable source text.
+
+This was a live verification, not an offline replay. Earlier uncertain results and offline corrected-evidence replays are documented separately below.
+
+---
 
 ### Example Claim
 
@@ -846,6 +872,7 @@ These are planned improvements, not currently deployed capabilities.
 | Resource | Location |
 |---|---|
 | Project presentation | [Pitch Deck](docs/FreshnessGuard-AI-Final-Pitch.pptx) |
+| Live demonstration video | [Watch Demo (Google Drive)](https://drive.google.com/file/d/15i9kHjsxAcz9NpkxW25dkydu5meLvKhY/view) |
 | Product screenshots | [Screenshots](docs/screenshots/) |
 | Browser workbench | [`frontend/`](frontend/) |
 | Core verification engine | [`freshnessguard/`](freshnessguard/) |
