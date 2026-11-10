@@ -33,7 +33,9 @@ The demonstration showcases the working Bifrost + Gemini + Tavily integration, l
 
 ### 📊 Project Presentation
 
-**[View the FreshnessGuard AI Pitch Deck (PPTX)](docs/FreshnessGuard-AI-Final-Pitch.pptx)**
+**[📊 View Final Pitch Deck (PPTX)](docs/FreshnessGuard-AI-Final-Submission.pptx)**
+
+**[📄 View Final Pitch Deck (PDF)](docs/FreshnessGuard-AI-Final-Submission.pdf)**
 
 The presentation covers the problem, proposed solution, verification pipeline, Bifrost and Tavily integrations, demonstrations, and validation results.
 
@@ -749,7 +751,8 @@ freshnessguard-ai/
 │   └── report.json
 │
 ├── docs/
-│   ├── FreshnessGuard-AI-Final-Pitch.pptx
+│   ├── FreshnessGuard-AI-Final-Submission.pptx
+│   ├── FreshnessGuard-AI-Final-Submission.pdf
 │   └── screenshots/
 │       ├── 01-homepage-dark.png
 │       ├── 02-verification-workspace.png
@@ -871,7 +874,8 @@ These are planned improvements, not currently deployed capabilities.
 
 | Resource | Location |
 |---|---|
-| Project presentation | [Pitch Deck](docs/FreshnessGuard-AI-Final-Pitch.pptx) |
+| Final pitch deck (PPTX) | [Download PowerPoint](docs/FreshnessGuard-AI-Final-Submission.pptx) |
+| Final pitch deck (PDF) | [View PDF](docs/FreshnessGuard-AI-Final-Submission.pdf) |
 | Live demonstration video | [Watch Demo (Google Drive)](https://drive.google.com/file/d/15i9kHjsxAcz9NpkxW25dkydu5meLvKhY/view) |
 | Product screenshots | [Screenshots](docs/screenshots/) |
 | Browser workbench | [`frontend/`](frontend/) |
